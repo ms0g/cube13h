@@ -1,7 +1,7 @@
 #include "APP.H"
-#include <IOSTREAM.H>
 #include "RENDERER.H"
 #include "CUBE.H"
+#include "TIMER.H"
 #include "UI.H"
 
 App::App() {
@@ -11,15 +11,21 @@ App::App() {
 
     ui = new UI();
 
+    initTimer();
+
     isRunning = 1;
 
-    fps = 60;
+    fps = frames = lastTime = 0;
 }
 
 App::~App() {
     delete renderer;
 
     delete cube;
+
+    delete ui;
+
+    exitTimer();
 }
 
 void App::loop(void) {
@@ -35,7 +41,17 @@ void App::processInput(void) {
 }
 
 void App::update(void) {
+    frames++;
+    // runs every second
+    unsigned int currentTime = getTick();
+    if (currentTime - lastTime >= SECOND) {
+        lastTime = currentTime;
+		fps = frames;
+		frames = 0;
+	}
+
     ui->update(fps);
+    
     cube->update();
 }
 

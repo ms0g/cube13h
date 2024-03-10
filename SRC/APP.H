@@ -27,7 +27,7 @@ private:
 
     int isRunning;
 
-    unsigned int fps;
+    unsigned int fps, frames, lastTime;
 };
 
 #endif
