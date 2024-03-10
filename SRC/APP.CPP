@@ -2,13 +2,18 @@
 #include <IOSTREAM.H>
 #include "RENDERER.H"
 #include "CUBE.H"
+#include "UI.H"
 
 App::App() {
     renderer = new Renderer();
 
     cube = new Cube();
 
+    ui = new UI();
+
     isRunning = 1;
+
+    fps = 60;
 }
 
 App::~App() {
@@ -30,13 +35,15 @@ void App::processInput(void) {
 }
 
 void App::update(void) {
+    ui->update(fps);
     cube->update();
 }
 
 void App::render(void) {
     renderer->clear(BLACK);
-    cout << "test;";
-   
+
+    ui->draw(renderer);
+    
     cube->draw(renderer);
 
     renderer->updateBuffer();

@@ -3,6 +3,7 @@
 
 class Renderer;
 class Cube;
+class UI;
 class App {
 public:
     App();
@@ -22,7 +23,11 @@ private:
 
     Cube* cube;
 
+    UI* ui;
+
     int isRunning;
+
+    unsigned int fps;
 };
 
 #endif

@@ -9,6 +9,16 @@ void Renderer::putpixel(int x, int y, char color) {
     vga.putpixel_f(x, y, color);
 }
 
+void Renderer::putchar(int x, int y, char color, const int (*font)[5][5]) {
+    for (int i = 0; i < 5; ++i) {
+        for (int j = 0; j < 5; ++j) {
+            if ((*font)[j][i]) {
+                vga.putpixel_f(x + i, y + j, color);
+            }
+        }
+    }
+}
+
 void Renderer::drawLine(int x0, int y0, int x1, int y1, char color) {
     int dx = x1 - x0;
     int dy = y1 - y0;
