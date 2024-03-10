@@ -3,6 +3,7 @@
 #include "CUBE.H"
 #include "TIMER.H"
 #include "UI.H"
+#include "KEYBRD.H"
 
 App::App() {
     renderer = new Renderer();
@@ -12,6 +13,8 @@ App::App() {
     ui = new UI();
 
     initTimer();
+
+    initkb();
 
     isRunning = 1;
 
@@ -26,6 +29,8 @@ App::~App() {
     delete ui;
 
     exitTimer();
+
+    exitkb();
 }
 
 void App::loop(void) {
@@ -37,7 +42,11 @@ void App::loop(void) {
 }
 
 void App::processInput(void) {
+    char key = kbhit();
 
+    if (key == ESC) {
+        isRunning = 0;
+    }
 }
 
 void App::update(void) {
@@ -51,7 +60,7 @@ void App::update(void) {
 	}
 
     ui->update(fps);
-    
+
     cube->update();
 }
 
