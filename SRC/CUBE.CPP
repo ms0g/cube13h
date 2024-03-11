@@ -9,6 +9,7 @@
 
 Cube::Cube() {
     int point_count = 0;
+    
     for (float x = -1; x <= 1; x += 0.25) {
         for (float y = -1; y <= 1; y += 0.25) {
             for (float z = -1; z <= 1; z += 0.25) {

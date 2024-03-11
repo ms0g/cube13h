@@ -51,8 +51,9 @@ void App::processInput(void) {
 
 void App::update(void) {
     frames++;
-    // runs every second
+    
     unsigned int currentTime = getTick();
+    // runs every second
     if (currentTime - lastTime >= SECOND) {
         lastTime = currentTime;
 		fps = frames;
