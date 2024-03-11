@@ -56,9 +56,9 @@ void App::update(void) {
     // runs every second
     if (currentTime - lastTime >= SECOND) {
         lastTime = currentTime;
-		fps = frames;
-		frames = 0;
-	}
+        fps = frames;
+        frames = 0;
+    }
 
     ui->update(fps);
 
