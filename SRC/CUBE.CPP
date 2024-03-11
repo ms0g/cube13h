@@ -66,8 +66,8 @@ void Cube::draw(Renderer* renderer, unsigned int frames) {
         }
        
         renderer->putpixel(
-            projected_point.x + (WIDTH / 2),
-            projected_point.y + (HEIGHT / 2),
+            projected_point.x + (WIDTH >> 1),
+            projected_point.y + (HEIGHT >> 1),
             color
         );
     }
