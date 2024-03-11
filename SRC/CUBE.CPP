@@ -25,6 +25,8 @@ Cube::Cube() {
     cube_rotation.x = 0;
     cube_rotation.y = 0;
     cube_rotation.z = 0;
+
+    color = BLUE;
 }
 
 void Cube::update(void) {
@@ -50,14 +52,22 @@ void Cube::update(void) {
     }
 }
 
-void Cube::draw(Renderer* renderer) {
-   for (int i = 0; i < N_POINTS; i++) {
+void Cube::draw(Renderer* renderer, unsigned int frames) {
+    for (int i = 0; i < N_POINTS; i++) {
         vec2 projected_point = projected_points[i];
         
+        if (!(frames % 35)) {
+            ++color;
+
+            if (color > 14) {
+                color = BLUE;
+            }
+        }
+       
         renderer->putpixel(
             projected_point.x + (WIDTH / 2),
             projected_point.y + (HEIGHT / 2),
-            YELLOW
+            color
         );
     }
 }
@@ -76,6 +86,7 @@ vec3 Cube::rotx(vec3& v, float angle) {
         v.y * cos(angle) - v.z * sin(angle),
         v.y * sin(angle) + v.z * cos(angle)
     };
+
     return rotated_vector;
 }
 
@@ -85,6 +96,7 @@ vec3 Cube::roty(vec3& v, float angle) {
         v.y,
         v.x * sin(angle) + v.z * cos(angle)
     };
+
     return rotated_vector;
 }
 
@@ -94,6 +106,7 @@ vec3 Cube::rotz(vec3& v, float angle) {
         v.x * sin(angle) + v.y * cos(angle),
         v.z
     };
+    
     return rotated_vector;
 }
 

@@ -10,7 +10,7 @@ public:
 
     void update(void);
 
-    void draw(Renderer* renderer);
+    void draw(Renderer* renderer, unsigned int frames);
 
 private:
     struct vec3 {
@@ -36,6 +36,8 @@ private:
     vec2 projected_points[N_POINTS];
     vec3 cube_rotation;
     vec3 camera_position;
+    
+    int color;
 };
 
 #endif

@@ -69,7 +69,7 @@ void App::render(void) {
 
     ui->draw(renderer);
     
-    cube->draw(renderer);
+    cube->draw(renderer, frames);
 
     renderer->updateBuffer();
 }
