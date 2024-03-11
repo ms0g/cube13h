@@ -39,7 +39,6 @@ public:
     void circle(int xc, int yc, int r, char color);
     
     void clear(char color);
-    void clear_area(char color);
 
     void updateBuffer(void);
 
