@@ -2,8 +2,8 @@
 
 void main(void) {
 	App* app = new App();
-
+	
 	app->loop();
-
+	
 	delete app;
 }

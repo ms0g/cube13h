@@ -3,7 +3,7 @@
 
 #define signbit(x) x < 0.0 ? 1 : 0
 
-#define round(x) signbit(x) ? ceil(x-0.5) : floor(x+0.5)
+#define round(x) signbit(x) ? ceil(x - 0.5) : floor(x + 0.5)
 
 void Renderer::putpixel(int x, int y, char color) {
     vga.putpixel_f(x, y, color);
