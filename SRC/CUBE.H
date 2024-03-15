@@ -24,16 +24,14 @@ private:
         float y;
     };
 
-    vec2 project(vec3& point);
-
     vec3 rotx(vec3& v, float angle);
 
     vec3 roty(vec3& v, float angle);
 
     vec3 rotz(vec3& v, float angle);
 
-    vec3 cube_points[N_POINTS];
-    vec2 projected_points[N_POINTS];
+    vec3 vertices[N_POINTS];
+    vec2 projectedVertices[N_POINTS];
     vec3 cube_rotation;
     vec3 camera_position;
     
