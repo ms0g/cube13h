@@ -24,11 +24,11 @@ private:
         float y;
     };
 
-    vec3 rotx(vec3& v, float angle);
+    vec3 rotx(vec3& v, vec2& angle);
 
-    vec3 roty(vec3& v, float angle);
+    vec3 roty(vec3& v, vec2& angle);
 
-    vec3 rotz(vec3& v, float angle);
+    vec3 rotz(vec3& v, vec2& angle);
 
     vec3 vertices[N_POINTS];
     vec2 projectedVertices[N_POINTS];

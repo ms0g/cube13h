@@ -38,9 +38,13 @@ void Cube::update(void) {
     for (int i = 0; i < N_POINTS; i++) {
         vec3 vertex = vertices[i];
 
-        vec3 transformedVertex = rotx(vertex, cube_rotation.x);
-        transformedVertex = roty(transformedVertex, cube_rotation.y);
-        transformedVertex = rotz(transformedVertex, cube_rotation.z);
+        vec2 angleX = {sin(cube_rotation.x), cos(cube_rotation.x)};
+        vec2 angleY = {sin(cube_rotation.y), cos(cube_rotation.y)};
+        vec2 angleZ = {sin(cube_rotation.z), cos(cube_rotation.z)};
+        
+        vec3 transformedVertex = rotx(vertex, angleX);
+        transformedVertex = roty(transformedVertex, angleY);
+        transformedVertex = rotz(transformedVertex, angleZ);
 
         // Move the points away from the camera
         transformedVertex.z -= camera_position.z;
@@ -75,30 +79,30 @@ void Cube::draw(Renderer* renderer, unsigned int frames) {
     }
 }
 
-vec3 Cube::rotx(vec3& v, float angle) {
+vec3 Cube::rotx(vec3& v, vec2& angle) {
     vec3 rotated_vector = {
         v.x,
-        v.y * cos(angle) - v.z * sin(angle),
-        v.y * sin(angle) + v.z * cos(angle)
+        v.y * angle.y - v.z * angle.x,
+        v.y * angle.x + v.z * angle.y
     };
 
     return rotated_vector;
 }
 
-vec3 Cube::roty(vec3& v, float angle) {
+vec3 Cube::roty(vec3& v, vec2& angle) {
     vec3 rotated_vector = {
-        v.x * cos(angle) - v.z * sin(angle),
+        v.x * angle.y - v.z * angle.x,
         v.y,
-        v.x * sin(angle) + v.z * cos(angle)
+        v.x * angle.x + v.z * angle.y
     };
 
     return rotated_vector;
 }
 
-vec3 Cube::rotz(vec3& v, float angle) {
+vec3 Cube::rotz(vec3& v, vec2& angle) {
     vec3 rotated_vector = {
-        v.x * cos(angle) - v.y * sin(angle),
-        v.x * sin(angle) + v.y * cos(angle),
+        v.x * angle.y - v.y * angle.x,
+        v.x * angle.x + v.y * angle.y,
         v.z
     };
     
