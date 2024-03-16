@@ -32,10 +32,10 @@ private:
 
     vec3 vertices[N_POINTS];
     vec2 projectedVertices[N_POINTS];
-    vec3 cube_rotation;
-    vec3 camera_position;
+    vec3 cubeRot;
+    vec3 cameraPos;
     
-    int color;
+    char color;
 };
 
 #endif

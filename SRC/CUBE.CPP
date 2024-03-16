@@ -19,35 +19,35 @@ Cube::Cube() {
         }
     }
 
-    camera_position.x = 0;
-    camera_position.y = 0;
-    camera_position.z = -5;
+    cameraPos.x = 0;
+    cameraPos.y = 0;
+    cameraPos.z = -5;
     
-    cube_rotation.x = 0;
-    cube_rotation.y = 0;
-    cube_rotation.z = 0;
+    cubeRot.x = 0;
+    cubeRot.y = 0;
+    cubeRot.z = 0;
 
     color = BLUE;
 }
 
 void Cube::update(void) {
-    cube_rotation.x += 0.01;
-    cube_rotation.y += 0.01;
-    cube_rotation.z += 0.01;
+    cubeRot.x += 0.01;
+    cubeRot.y += 0.01;
+    cubeRot.z += 0.01;
 
     for (int i = 0; i < N_POINTS; i++) {
         vec3 vertex = vertices[i];
 
-        vec2 angleX = {sin(cube_rotation.x), cos(cube_rotation.x)};
-        vec2 angleY = {sin(cube_rotation.y), cos(cube_rotation.y)};
-        vec2 angleZ = {sin(cube_rotation.z), cos(cube_rotation.z)};
+        vec2 angleX = {sin(cubeRot.x), cos(cubeRot.x)};
+        vec2 angleY = {sin(cubeRot.y), cos(cubeRot.y)};
+        vec2 angleZ = {sin(cubeRot.z), cos(cubeRot.z)};
         
         vec3 transformedVertex = rotx(vertex, angleX);
         transformedVertex = roty(transformedVertex, angleY);
         transformedVertex = rotz(transformedVertex, angleZ);
 
         // Move the points away from the camera
-        transformedVertex.z -= camera_position.z;
+        transformedVertex.z -= cameraPos.z;
 
         // Project the current point
         vec2 projectedVertex =  {
