@@ -66,7 +66,7 @@ void Cube::draw(Renderer* renderer, unsigned int frames) {
         if (!(frames % 35)) {
             ++color;
 
-            if (color > 14) {
+            if (color > YELLOW) {
                 color = BLUE;
             }
         }
