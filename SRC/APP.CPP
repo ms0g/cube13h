@@ -54,7 +54,7 @@ void App::update(void) {
     
     unsigned int currentTime = getTick();
     // runs every second
-    if (currentTime - lastTime >= SECOND) {
+    if (currentTime - lastTime >= TICKS_PER_SECOND) {
         lastTime = currentTime;
         fps = frames;
         frames = 0;

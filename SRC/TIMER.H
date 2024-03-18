@@ -1,7 +1,7 @@
 #ifndef TIMER_H
 #define TIMER_H
 
-#define SECOND 18.206
+#define TICKS_PER_SECOND 18.2
 
 void initTimer(void);
 
