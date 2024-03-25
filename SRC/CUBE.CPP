@@ -8,13 +8,13 @@
 #define FOV_FACTOR 280
 
 Cube::Cube() {
-    int point_count = 0;
+    int pointCount = 0;
     
     for (float x = -1; x <= 1; x += 0.25) {
         for (float y = -1; y <= 1; y += 0.25) {
             for (float z = -1; z <= 1; z += 0.25) {
-                vec3 new_point = {x, y, z};
-                vertices[point_count++] = new_point;
+                vec3 newPoint = {x, y, z};
+                vertices[pointCount++] = newPoint;
             }
         }
     }
