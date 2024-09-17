@@ -7,105 +7,160 @@
 
 #define FOV_FACTOR 280
 
+int numOfTriangle = 0;
+
 Cube::Cube() {
-    int pointCount = 0;
-    
-    for (float x = -1; x <= 1; x += 0.25) {
-        for (float y = -1; y <= 1; y += 0.25) {
-            for (float z = -1; z <= 1; z += 0.25) {
-                vec3 newPoint = {x, y, z};
-                vertices[pointCount++] = newPoint;
-            }
-        }
-    }
+    vertices[0] = vec3(-1, -1, -1); // 1
+    vertices[1] = vec3(-1,  1, -1); // 2
+    vertices[2] = vec3(1,  1, -1);  // 3
+    vertices[3] = vec3(1, -1, -1);  // 4
+    vertices[4] = vec3(1,  1,  1);  // 5
+    vertices[5] = vec3(1, -1,  1);  // 6
+    vertices[6] = vec3(-1,  1,  1); // 7
+    vertices[7] = vec3(-1, -1,  1); // 8
 
-    cameraPos.x = 0;
-    cameraPos.y = 0;
-    cameraPos.z = -5;
-    
-    cubeRot.x = 0;
-    cubeRot.y = 0;
-    cubeRot.z = 0;
+    // front
+    faces[0] = face(1, 2, 3, MAGENTA);
+    faces[1] = face(1, 3, 4, MAGENTA);
+    // right
+    faces[2] = face(4, 3, 5, BLUE);
+    faces[3] = face(4, 5, 6, BLUE);
+    // back
+    faces[4] = face(6, 5, 7, YELLOW);
+    faces[5] = face(6, 7, 8, YELLOW);
+    // left
+    faces[6] = face(8, 7, 2, LIGHTBLUE);
+    faces[7] = face(8, 2, 1, LIGHTBLUE);
+    // top
+    faces[8] = face(2, 7, 5, GREEN);
+    faces[9] = face(2, 5, 3, GREEN);
+    // bottom
+    faces[3] = face(6, 8, 1, CYAN);
+    faces[3] = face(6, 1, 4, CYAN);
 
+    cameraPos.z(-5);
     color = BLUE;
 }
 
+vec2 project(vec3& point) {
+    vec2 projected_point = {
+        (FOV_FACTOR * point.x()) / point.z(),
+        (FOV_FACTOR * point.y()) / point.z()
+    };
+    return projected_point;
+}
+
 void Cube::update(void) {
-    cubeRot.x += 0.01;
-    cubeRot.y += 0.01;
-    cubeRot.z += 0.01;
+    cubeRot.sadd(0.01);
 
-    for (int i = 0; i < N_POINTS; i++) {
-        vec3 vertex = vertices[i];
-
-        vec2 angleX = {sin(cubeRot.x), cos(cubeRot.x)};
-        vec2 angleY = {sin(cubeRot.y), cos(cubeRot.y)};
-        vec2 angleZ = {sin(cubeRot.z), cos(cubeRot.z)};
+    for (int i = 0; i < FACE_COUNT; i++) {
+        face face = faces[i];
         
-        vec3 transformedVertex = rotx(vertex, angleX);
-        transformedVertex = roty(transformedVertex, angleY);
-        transformedVertex = rotz(transformedVertex, angleZ);
+        vec3 faceVertices[3];
 
-        // Move the points away from the camera
-        transformedVertex.z -= cameraPos.z;
+        faceVertices[0] = vertices[face.mA - 1];
+        faceVertices[1] = vertices[face.mB - 1];
+        faceVertices[2] = vertices[face.mC - 1];
 
-        // Project the current point
-        vec2 projectedVertex =  {
-            (FOV_FACTOR * transformedVertex.x) / transformedVertex.z, 
-            (FOV_FACTOR * transformedVertex.y) / transformedVertex.z};
+        vec3 transformedVertices[3];
+        
+        for (int i = 0; i < 3; i++) {
+            vec3 transformedVertex = faceVertices[i];
 
-        // Save the projected 2D vector in the array of projected points
-        projectedVertices[i] = projectedVertex;
+            transformedVertex = transformedVertex.rotx(cubeRot.x());
+            transformedVertex = transformedVertex.roty(cubeRot.y());
+            transformedVertex = transformedVertex.rotz(cubeRot.z());
+
+            // Translate the vertex away from the camera
+            float z = transformedVertex.z() + cameraPos.z();
+            transformedVertex.z(z);
+
+            // Save transformed vertex in the array of transformed vertices
+            transformedVertices[i] = transformedVertex;
+        }
+
+         // Backface culling test to see if the current face should be projected
+        // if (cull_method == CULL_BACKFACE) {
+        //     vec3_t vector_a = transformedVertices[0]; /*   A   */
+        //     vec3_t vector_b = transformedVertices[1]; /*  / \  */
+        //     vec3_t vector_c = transformedVertices[2]; /* C---B */
+
+        //     // Get the vector subtraction of B-A and C-A
+        //     vec3_t vector_ab = vec3_sub(vector_b, vector_a);
+        //     vec3_t vector_ac = vec3_sub(vector_c, vector_a);
+        //     vec3_normalize(&vector_ab);
+        //     vec3_normalize(&vector_ac);
+
+        //     // Compute the face normal (using cross product to find perpendicular)
+        //     vec3_t normal = vec3_cross(vector_ab, vector_ac);
+        //     vec3_normalize(&normal);
+
+        //     // Find the vector between vertex A in the triangle and the camera origin
+        //     vec3_t camera_ray = vec3_sub(camera_position, vector_a);
+
+        //     // Calculate how aligned the camera ray is with the face normal (using dot product)
+        //     float dot_normal_camera = vec3_dot(normal, camera_ray);
+
+        //     // Bypass the triangles that are looking away from the camera
+        //     if (dot_normal_camera < 0) {
+        //         continue;
+        //     }
+        // }
+
+        vec2 projectedPoints[3];
+
+        // Loop all three vertices to perform projection
+        for (int j = 0; j < 3; j++) {
+            // Project the current vertex
+            projectedPoints[j] = project(transformedVertices[j]);
+
+            // Scale and translate the projected points to the middle of the screen
+            projectedPoints[j].x += (WIDTH / 2);
+            projectedPoints[j].y += (HEIGHT / 2);
+        }
+
+        // Calculate the average depth for each face based on the vertices after transformation
+        float avg_depth = (transformedVertices[0].z() + transformedVertices[1].z() + transformedVertices[2].z()) / 3.0;
+
+        triangle projectedTriangle = {
+            {
+                { projectedPoints[0].x, projectedPoints[0].y },
+                { projectedPoints[1].x, projectedPoints[1].y },
+                { projectedPoints[2].x, projectedPoints[2].y },
+            },
+            face.mColor,
+            avg_depth
+        };
+
+        triangles_to_render[numOfTriangle++] = projectedTriangle;
+    }
+
+    
+    for (int k = 0; k < numOfTriangle; k++) {
+        for (int j = k; j < numOfTriangle; j++) {
+            if (triangles_to_render[k].avg_depth < triangles_to_render[j].avg_depth) {
+                // Swap the triangles positions in the array
+                triangle temp = triangles_to_render[k];
+                triangles_to_render[k] = triangles_to_render[j];
+                triangles_to_render[j] = temp;
+            }
+        }
     }
 }
 
 void Cube::draw(Renderer* renderer, unsigned int frames) {
-    for (int i = 0; i < N_POINTS; i++) {
-        vec2 projectedVertex = projectedVertices[i];
-        
-        if (!(frames % 35)) {
-            ++color;
+    for (int i = 0; i < numOfTriangle; i++) {
+        triangle triangle = triangles_to_render[i];
 
-            if (color > YELLOW) {
-                color = BLUE;
-            }
-        }
-       
-        renderer->putpixel(
-            projectedVertex.x + (WIDTH >> 1),
-            projectedVertex.y + (HEIGHT >> 1),
-            color
-        );
+        // Draw filled triangle
+        renderer->drawFilledTriangle(
+                triangle.points[0].x, triangle.points[0].y, // vertex A
+                triangle.points[1].x, triangle.points[1].y, // vertex B
+                triangle.points[2].x, triangle.points[2].y, // vertex C
+                triangle.color
+        );  
     }
-}
 
-vec3 Cube::rotx(vec3& v, vec2& angle) {
-    vec3 rotated_vector = {
-        v.x,
-        v.y * angle.y - v.z * angle.x,
-        v.y * angle.x + v.z * angle.y
-    };
-
-    return rotated_vector;
-}
-
-vec3 Cube::roty(vec3& v, vec2& angle) {
-    vec3 rotated_vector = {
-        v.x * angle.y - v.z * angle.x,
-        v.y,
-        v.x * angle.x + v.z * angle.y
-    };
-
-    return rotated_vector;
-}
-
-vec3 Cube::rotz(vec3& v, vec2& angle) {
-    vec3 rotated_vector = {
-        v.x * angle.y - v.y * angle.x,
-        v.x * angle.x + v.y * angle.y,
-        v.z
-    };
-    
-    return rotated_vector;
+    numOfTriangle = 0;
 }
 

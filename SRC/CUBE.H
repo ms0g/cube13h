@@ -1,7 +1,11 @@
 #ifndef CUBE_H
 #define CUBE_H
 
-#define N_POINTS (9 * 9 * 9)
+#include "VEC.H"
+#include "TRINGL.H"
+
+#define V_COUNT 8
+#define FACE_COUNT (6 * 2)
 
 class Renderer;
 class Cube {
@@ -13,27 +17,12 @@ public:
     void draw(Renderer* renderer, unsigned int frames);
 
 private:
-    struct vec3 {
-        float x;
-        float y;
-        float z;
-    };
-
-    struct vec2 {
-        float x;
-        float y;
-    };
-
-    vec3 rotx(vec3& v, vec2& angle);
-
-    vec3 roty(vec3& v, vec2& angle);
-
-    vec3 rotz(vec3& v, vec2& angle);
-
-    vec3 vertices[N_POINTS];
-    vec2 projectedVertices[N_POINTS];
+    vec3 vertices[V_COUNT];
+    vec2 projectedVertices[V_COUNT];
     vec3 cubeRot;
     vec3 cameraPos;
+    face faces[FACE_COUNT];
+    triangle triangles_to_render[100];
     
     char color;
 };

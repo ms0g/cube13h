@@ -1,9 +1,16 @@
 #include "RENDERER.H"
-#include <MATH.H>
+
+#define abs(x) (x < 0 ? 0 - x : x)
+
+#define ceil(x) ((int)x + 1)
+
+#define floor(x) (int)x
 
 #define signbit(x) x < 0.0 ? 1 : 0
 
 #define round(x) signbit(x) ? ceil(x - 0.5) : floor(x + 0.5)
+
+#define swap(x, y) { (x)=(x)^(y); (y)=(x)^(y); (x)=(x)^(y); }
 
 void Renderer::putpixel(int x, int y, char color) {
     vga.putpixel(x, y, color);
@@ -47,6 +54,41 @@ void Renderer::rectangle(int x, int y, int width, int height, char color) {
     }
 }
 
+void Renderer::drawFilledTriangle(int x0, int y0, int x1, int y1, int x2, int y2, unsigned short color) {
+    if (y0 > y1) {
+        swap(y0, y1);
+        swap(x0, x1);
+    }
+
+    if (y1 > y2) {
+        swap(y1, y2);
+        swap(x1, x2);
+    }
+
+    if (y0 > y1) {
+        swap(y0, y1);
+        swap(x0, x1);
+    }
+
+    if (y1 == y2) {
+        // Draw flat-bottom triangle
+        fillFlatBottomTriangle(x0, y0, x1, y1, x2, y2, color);
+    } else if (y0 == y1) {
+        // Draw flat-top triangle
+        fillFlatTopTriangle(x0, y0, x1, y1, x2, y2, color);
+    } else {
+        // Calculate the new vertex (Mx,My) using triangle similarity
+        int My = y1;
+        int Mx = (((x2 - x0) * (y1 - y0)) / (y2 - y0)) + x0;
+
+        // Draw flat-bottom triangle
+        fillFlatBottomTriangle(x0, y0, x1, y1, Mx, My, color);
+
+        // Draw flat-top triangle
+        fillFlatTopTriangle(x1, y1, Mx, My, x2, y2, color);
+    }
+}
+
 void Renderer::circle(int xc, int yc, int r, char color) {
     int x = 0, y = r; 
     int d = 3 - 2 * r;
@@ -70,6 +112,40 @@ void Renderer::circle(int xc, int yc, int r, char color) {
         }
              
         _circle(xc, yc, x, y, color);
+    }
+}
+
+
+void Renderer::fillFlatBottomTriangle(int x0, int y0, int x1, int y1, int x2, int y2, unsigned short color) {
+    // Inverse slope because we're calculating the x changes with respect to y
+    float invSlope1 = (float)(x1 - x0) / (y1 - y0);
+    float invSlope2 = (float)(x2 - x0) / (y2 - y0);
+
+    // Start x_start and x_end from the top vertex (x0,y0)
+    float xStart = x0;
+    float xEnd = x0;
+
+    // Loop all the scanlines from top to bottom
+    for (int y = y0; y <= y2; ++y) {
+        drawLine(xStart, y, xEnd, y, color);
+        xStart += invSlope1;
+        xEnd += invSlope2;
+    }
+}
+
+void Renderer::fillFlatTopTriangle(int x0, int y0, int x1, int y1, int x2, int y2, unsigned short color) {
+    float invSlope1 = (float)(x2 - x0) / (y2 - y0);
+    float invSlope2 = (float)(x2 - x1) / (y2 - y1);
+
+    // Start x_start and x_end from the top vertex (x0,y0)
+    float xStart = x2;
+    float xEnd = x2;
+
+    // Loop all the scanlines from top to bottom
+    for (int y = y2; y >= y0; --y) {
+        drawLine(xStart, y, xEnd, y, color);
+        xStart -= invSlope1;
+        xEnd -= invSlope2;
     }
 }
 
