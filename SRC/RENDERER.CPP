@@ -6,14 +6,14 @@
 #define round(x) signbit(x) ? ceil(x - 0.5) : floor(x + 0.5)
 
 void Renderer::putpixel(int x, int y, char color) {
-    vga.putpixel_f(x, y, color);
+    vga.putpixel(x, y, color);
 }
 
 void Renderer::putchar(int x, int y, char color, const int (*font)[5][5]) {
     for (int i = 0; i < 5; ++i) {
         for (int j = 0; j < 5; ++j) {
             if ((*font)[j][i]) {
-                vga.putpixel_f(x + i, y + j, color);
+                vga.putpixel(x + i, y + j, color);
             }
         }
     }
@@ -32,7 +32,7 @@ void Renderer::drawLine(int x0, int y0, int x1, int y1, char color) {
     float y = y0;
 
     for (int i = 0; i < step; ++i) {
-        vga.putpixel_f(round(x), round(y), color);
+        vga.putpixel(round(x), round(y), color);
         
         x += xinc;
         y += yinc;
@@ -42,7 +42,7 @@ void Renderer::drawLine(int x0, int y0, int x1, int y1, char color) {
 void Renderer::rectangle(int x, int y, int width, int height, char color) {
     for (int i = 0; i < width; i++) {
         for (int j = 0; j < height; j++) {
-            vga.putpixel_f(x + i, y + j, color);
+            vga.putpixel(x + i, y + j, color);
         }
     }
 }
@@ -74,14 +74,14 @@ void Renderer::circle(int xc, int yc, int r, char color) {
 }
 
 void Renderer::_circle(int xc, int yc, int x, int y, char color) { 
-    vga.putpixel_f(xc+x, yc+y, color); 
-    vga.putpixel_f(xc-x, yc+y, color); 
-    vga.putpixel_f(xc+x, yc-y, color); 
-    vga.putpixel_f(xc-x, yc-y, color); 
-    vga.putpixel_f(xc+y, yc+x, color); 
-    vga.putpixel_f(xc-y, yc+x, color); 
-    vga.putpixel_f(xc+y, yc-x, color); 
-    vga.putpixel_f(xc-y, yc-x, color); 
+    vga.putpixel(xc+x, yc+y, color); 
+    vga.putpixel(xc-x, yc+y, color); 
+    vga.putpixel(xc+x, yc-y, color); 
+    vga.putpixel(xc-x, yc-y, color); 
+    vga.putpixel(xc+y, yc+x, color); 
+    vga.putpixel(xc-y, yc+x, color); 
+    vga.putpixel(xc+y, yc-x, color); 
+    vga.putpixel(xc-y, yc-x, color); 
 }
 
 void Renderer::clear(char color) {
