@@ -37,7 +37,6 @@ Cube::Cube() {
     faces[3] = face(6, 1, 4, CYAN);
 
     cameraPos.z(-5);
-    color = BLUE;
 }
 
 vec2 project(vec3& point) {

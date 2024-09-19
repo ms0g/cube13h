@@ -24,8 +24,6 @@ private:
     vec3 cameraPos;
     face faces[FACE_COUNT];
     vector<triangle> triangles_to_render;
-    
-    char color;
 };
 
 #endif
