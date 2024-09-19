@@ -50,17 +50,17 @@ void App::processInput(void) {
 }
 
 void App::update(void) {
-    // frames++;
+    frames++;
     
-    // unsigned int currentTime = getTick();
-    // // runs every second
-    // if (currentTime - lastTime >= TICKS_PER_SECOND) {
-    //     lastTime = currentTime;
-    //     fps = frames;
-    //     frames = 0;
-    // }
+    unsigned int currentTime = getTick();
+    // runs every second
+    if (currentTime - lastTime >= TICKS_PER_SECOND) {
+        lastTime = currentTime;
+        fps = frames;
+        frames = 0;
+    }
 
-    //ui->update(fps);
+    ui->update(fps);
 
     cube->update();
 }
@@ -68,7 +68,7 @@ void App::update(void) {
 void App::render(void) {
     renderer->clear(BLACK);
 
-    //ui->draw(renderer);
+    ui->draw(renderer);
     
     cube->draw(renderer, frames);
 

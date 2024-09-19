@@ -3,6 +3,7 @@
 
 #include "VEC.H"
 #include "TRINGL.H"
+#include "VECTOR.H"
 
 #define V_COUNT 8
 #define FACE_COUNT (6 * 2)
@@ -22,7 +23,7 @@ private:
     vec3 cubeRot;
     vec3 cameraPos;
     face faces[FACE_COUNT];
-    triangle triangles_to_render[100];
+    vector<triangle> triangles_to_render;
     
     char color;
 };

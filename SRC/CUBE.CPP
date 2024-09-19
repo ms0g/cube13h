@@ -7,8 +7,6 @@
 
 #define FOV_FACTOR 280
 
-int numOfTriangle = 0;
-
 Cube::Cube() {
     vertices[0] = vec3(-1, -1, -1); // 1
     vertices[1] = vec3(-1,  1, -1); // 2
@@ -79,32 +77,31 @@ void Cube::update(void) {
             transformedVertices[i] = transformedVertex;
         }
 
-         // Backface culling test to see if the current face should be projected
-        // if (cull_method == CULL_BACKFACE) {
-        //     vec3_t vector_a = transformedVertices[0]; /*   A   */
-        //     vec3_t vector_b = transformedVertices[1]; /*  / \  */
-        //     vec3_t vector_c = transformedVertices[2]; /* C---B */
+        //  // Backface culling test to see if the current face should be projected
+        // vec3 vector_a = transformedVertices[0]; /*   A   */
+        // vec3 vector_b = transformedVertices[1]; /*  / \  */
+        // vec3 vector_c = transformedVertices[2]; /* C---B */
 
-        //     // Get the vector subtraction of B-A and C-A
-        //     vec3_t vector_ab = vec3_sub(vector_b, vector_a);
-        //     vec3_t vector_ac = vec3_sub(vector_c, vector_a);
-        //     vec3_normalize(&vector_ab);
-        //     vec3_normalize(&vector_ac);
+        // // Get the vector subtraction of B-A and C-A
+        // vec3 vector_ab = vector_b - vector_a;
+        // vec3 vector_ac = vector_c - vector_a;
+        // vector_ab.normalize();
+        // vector_ac.normalize();
+      
+        // // Compute the face normal (using cross product to find perpendicular)
+        // vec3 normal = vector_ab.cross(vector_ac);
+        // //cout << " " << normal.x() << " " << normal.y() << " " << normal.z() << "\n";
+        // normal.normalize();
 
-        //     // Compute the face normal (using cross product to find perpendicular)
-        //     vec3_t normal = vec3_cross(vector_ab, vector_ac);
-        //     vec3_normalize(&normal);
+        // // Find the vector between vertex A in the triangle and the camera origin
+        // vec3 camera_ray = cameraPos - vector_a;
 
-        //     // Find the vector between vertex A in the triangle and the camera origin
-        //     vec3_t camera_ray = vec3_sub(camera_position, vector_a);
+        // // Calculate how aligned the camera ray is with the face normal (using dot product)
+        // float dot_normal_camera = normal.dot(camera_ray);
 
-        //     // Calculate how aligned the camera ray is with the face normal (using dot product)
-        //     float dot_normal_camera = vec3_dot(normal, camera_ray);
-
-        //     // Bypass the triangles that are looking away from the camera
-        //     if (dot_normal_camera < 0) {
-        //         continue;
-        //     }
+        // // Bypass the triangles that are looking away from the camera
+        // if (dot_normal_camera < 0) {
+        //     continue;
         // }
 
         vec2 projectedPoints[3];
@@ -132,12 +129,13 @@ void Cube::update(void) {
             avg_depth
         };
 
-        triangles_to_render[numOfTriangle++] = projectedTriangle;
+
+        triangles_to_render.push_back(projectedTriangle);
     }
 
     
-    for (int k = 0; k < numOfTriangle; k++) {
-        for (int j = k; j < numOfTriangle; j++) {
+    for (int k = 0; k < triangles_to_render.size(); k++) {
+        for (int j = k; j < triangles_to_render.size(); j++) {
             if (triangles_to_render[k].avg_depth < triangles_to_render[j].avg_depth) {
                 // Swap the triangles positions in the array
                 triangle temp = triangles_to_render[k];
@@ -149,7 +147,7 @@ void Cube::update(void) {
 }
 
 void Cube::draw(Renderer* renderer, unsigned int frames) {
-    for (int i = 0; i < numOfTriangle; i++) {
+    for (int i = 0; i < triangles_to_render.size(); i++) {
         triangle triangle = triangles_to_render[i];
 
         // Draw filled triangle
@@ -161,6 +159,6 @@ void Cube::draw(Renderer* renderer, unsigned int frames) {
         );  
     }
 
-    numOfTriangle = 0;
+    triangles_to_render.clear();
 }
 

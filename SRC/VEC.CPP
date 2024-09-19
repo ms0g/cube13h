@@ -31,6 +31,7 @@ float vec3::len(void) {
 
 void vec3::normalize(void) {
     float length = len();
+    
     mX /= length;
     mY /= length;
     mZ /= length;
