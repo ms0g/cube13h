@@ -88,11 +88,7 @@ int vector<T>::isEmpty(void) const {
 
 template <class T>
 void vector<T>::clear(void){
-    if (mData != NULL) {
-        delete[] mData;
-        mData = NULL;
-    }
-
+    memset(mData, 0, mCount);
     mCount = 0;
     mCapacity = 1;
 }
@@ -178,10 +174,6 @@ void vector<T>::remove(int index) {
 
 template <class T>
 void vector<T>::push_back(T& value) {
-    if (mData == NULL) {
-        reserve(mCapacity);
-    }
-
     insert(mCount, value);
 }
 
