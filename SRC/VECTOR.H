@@ -18,6 +18,8 @@ public:
     
     int size(void) const;
 
+    int capacity(void) const;
+
     int isEmpty(void) const;
 
     void clear(void);
@@ -41,11 +43,11 @@ public:
     void push_back(T& value);
     
     T& operator[](int index);
+
 private:
     T* mData;
     int mCount;
     int mCapacity;
-
 };
 
 template <class T>
@@ -71,7 +73,10 @@ vector<T>::~vector() {
 
 template <class T>
 void vector<T>::reserve(int size) {
+    delete[] mData;
+    
     mData = new T[size];
+    
     mCapacity = size;
     mCount = 0;
 }
@@ -82,15 +87,20 @@ int vector<T>::size(void) const {
 }
 
 template <class T>
+int vector<T>::capacity(void) const {
+    return mCapacity;
+}
+
+template <class T>
 int vector<T>::isEmpty(void) const {
     return mCount == 0;
 }
 
 template <class T>
-void vector<T>::clear(void){
-    memset(mData, 0, mCount);
+void vector<T>::clear(void) {
+    memset(mData, 0, sizeof(T) * mCount);
+    
     mCount = 0;
-    mCapacity = 1;
 }
 
 template <class T>
@@ -115,8 +125,8 @@ const T& vector<T>::cend(void) const {
 
 template <class T>
 T& vector<T>::get(int index) const {
-    if (index < 0 || index >= mCount) {
-        cout << "get:Index out of bounds";
+    if (index < 0 || index > mCount) {
+        cerr << "get:Index out of bounds";
         exit(1);
     }
 
@@ -126,7 +136,7 @@ T& vector<T>::get(int index) const {
 template <class T>
 void vector<T>::set(int index, T& value) {
     if (index < 0 || index > mCount) {
-        cout << "set:Index out of bounds";
+        cerr << "set:Index out of bounds";
         exit(1);
     }
 
@@ -136,7 +146,7 @@ void vector<T>::set(int index, T& value) {
 template <class T>
 void vector<T>::insert(int index, T& value) {
     if (index < 0 || index > mCount) {
-        cout << "insert:Index out of bounds";
+        cerr << "insert:Index out of bounds";
         exit(1);
     }
 
@@ -161,7 +171,7 @@ void vector<T>::insert(int index, T& value) {
 template <class T>
 void vector<T>::remove(int index) {
     if (index < 0 || index > mCount) {
-        cout << "remove:Index out of bounds";
+        cerr << "remove:Index out of bounds";
         exit(1);
     }
     
@@ -179,11 +189,6 @@ void vector<T>::push_back(T& value) {
 
 template <class T>
 T& vector<T>::operator[](int index) {
-    if (index < 0 || index > mCount) {
-        cout << "operator[]:Index out of bounds";
-        exit(1);
-    }
-
     return mData[index];
 }
 
