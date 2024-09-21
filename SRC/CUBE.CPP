@@ -7,6 +7,27 @@
 
 #define FOV_FACTOR 280
 
+static const face faces[FACE_COUNT] = {
+    // front
+    {1, 2, 3, GREEN},
+    {1, 3, 4, GREEN},
+    // right
+    {4, 3, 5, GREEN},
+    {4, 5, 6, GREEN},
+    // back
+    {6, 5, 7, GREEN},
+    {6, 7, 8, GREEN},
+    // left
+    {8, 7, 2, GREEN},
+    {8, 2, 1, GREEN},
+    // top
+    {2, 7, 5, GREEN},
+    {2, 5, 3, GREEN},
+    // bottom
+    {6, 8, 1, GREEN},
+    {6, 1, 4, GREEN},
+};
+
 Cube::Cube() {
     vertices[0] = vec3(-1, -1, -1); // 1
     vertices[1] = vec3(-1,  1, -1); // 2
@@ -17,34 +38,7 @@ Cube::Cube() {
     vertices[6] = vec3(-1,  1,  1); // 7
     vertices[7] = vec3(-1, -1,  1); // 8
 
-    // front
-    faces[0] = face(1, 2, 3, MAGENTA);
-    faces[1] = face(1, 3, 4, MAGENTA);
-    // right
-    faces[2] = face(4, 3, 5, BLUE);
-    faces[3] = face(4, 5, 6, BLUE);
-    // back
-    faces[4] = face(6, 5, 7, YELLOW);
-    faces[5] = face(6, 7, 8, YELLOW);
-    // left
-    faces[6] = face(8, 7, 2, LIGHTBLUE);
-    faces[7] = face(8, 2, 1, LIGHTBLUE);
-    // top
-    faces[8] = face(2, 7, 5, GREEN);
-    faces[9] = face(2, 5, 3, GREEN);
-    // bottom
-    faces[3] = face(6, 8, 1, CYAN);
-    faces[3] = face(6, 1, 4, CYAN);
-
     cameraPos.z(-5);
-}
-
-vec2 project(vec3& point) {
-    vec2 projected_point = {
-        (FOV_FACTOR * point.x()) / point.z(),
-        (FOV_FACTOR * point.y()) / point.z()
-    };
-    return projected_point;
 }
 
 void Cube::update(void) {
@@ -55,9 +49,9 @@ void Cube::update(void) {
         
         vec3 faceVertices[3];
 
-        faceVertices[0] = vertices[face.mA - 1];
-        faceVertices[1] = vertices[face.mB - 1];
-        faceVertices[2] = vertices[face.mC - 1];
+        faceVertices[0] = vertices[face.a - 1];
+        faceVertices[1] = vertices[face.b - 1];
+        faceVertices[2] = vertices[face.c - 1];
 
         vec3 transformedVertices[3];
         
@@ -124,25 +118,13 @@ void Cube::update(void) {
                 { projectedPoints[1].x, projectedPoints[1].y },
                 { projectedPoints[2].x, projectedPoints[2].y },
             },
-            face.mColor,
+            face.color,
             avg_depth
         };
-
-
+        
         triangles_to_render.push_back(projectedTriangle);
     }
 
-    
-    for (int k = 0; k < triangles_to_render.size(); k++) {
-        for (int j = k; j < triangles_to_render.size(); j++) {
-            if (triangles_to_render[k].avg_depth < triangles_to_render[j].avg_depth) {
-                // Swap the triangles positions in the array
-                triangle temp = triangles_to_render[k];
-                triangles_to_render[k] = triangles_to_render[j];
-                triangles_to_render[j] = temp;
-            }
-        }
-    }
 }
 
 void Cube::draw(Renderer* renderer, unsigned int frames) {
@@ -150,7 +132,7 @@ void Cube::draw(Renderer* renderer, unsigned int frames) {
         triangle triangle = triangles_to_render[i];
 
         // Draw filled triangle
-        renderer->drawFilledTriangle(
+        renderer->triangle(
                 triangle.points[0].x, triangle.points[0].y, // vertex A
                 triangle.points[1].x, triangle.points[1].y, // vertex B
                 triangle.points[2].x, triangle.points[2].y, // vertex C
@@ -159,5 +141,13 @@ void Cube::draw(Renderer* renderer, unsigned int frames) {
     }
 
     triangles_to_render.clear();
+}
+
+vec2 Cube::project(vec3& point) {
+    vec2 projected_point = {
+        (FOV_FACTOR * point.x()) / point.z(),
+        (FOV_FACTOR * point.y()) / point.z()
+    };
+    return projected_point;
 }
 

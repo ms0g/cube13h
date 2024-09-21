@@ -18,11 +18,12 @@ public:
     void draw(Renderer* renderer, unsigned int frames);
 
 private:
+    vec2 project(vec3& point);
+
     vec3 vertices[V_COUNT];
     vec2 projectedVertices[V_COUNT];
     vec3 cubeRot;
     vec3 cameraPos;
-    face faces[FACE_COUNT];
     vector<triangle> triangles_to_render;
 };
 
