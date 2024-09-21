@@ -48,7 +48,7 @@ void Renderer::putchar(int x, int y, char color, const int (*font)[5][5]) {
     }
 }
 
-void Renderer::drawLine(int x0, int y0, int x1, int y1, char color) {
+void Renderer::line(int x0, int y0, int x1, int y1, char color) {
     int dx = x1 - x0;
     int dy = y1 - y0;
 
@@ -77,9 +77,9 @@ void Renderer::rectangle(int x, int y, int width, int height, char color) {
 }
 
 void Renderer::triangle(int x0, int y0, int x1, int y1, int x2, int y2, unsigned char color) {
-    drawLine(x0, y0, x1, y1, color);
-    drawLine(x1, y1, x2, y2, color);
-    drawLine(x2, y2, x0, y0, color);
+    line(x0, y0, x1, y1, color);
+    line(x1, y1, x2, y2, color);
+    line(x2, y2, x0, y0, color);
 }
 
 void Renderer::circle(int xc, int yc, int r, char color) {
