@@ -1,10 +1,8 @@
 #include "CUBE.H"
 #include "RENDERER.H"
-#include <MATH.H>
 
 #define WIDTH 320
 #define HEIGHT 200
-
 #define FOV_FACTOR 280
 
 static const face faces[FACE_COUNT] = {
