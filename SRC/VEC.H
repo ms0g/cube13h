@@ -1,5 +1,5 @@
-#ifndef VEC3_H
-#define VEC3_H
+#ifndef VEC_H
+#define VEC_H
  
 struct vec2 {
     float x;
@@ -24,8 +24,9 @@ public:
     void sadd(float scalar);
     float len(void);
     void normalize(void);
-    float dot(const vec3& other);
-    vec3 cross(const vec3& other);
+    float dot(const vec3& v);
+    vec3 cross(const vec3& v);
+    vec2 project(int fov);
 
     vec3 rotx(float angle);
     vec3 roty(float angle);

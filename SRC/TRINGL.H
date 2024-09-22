@@ -13,7 +13,6 @@ struct face {
 struct triangle {
     vec2 points[3];
     char color;
-    float avg_depth;
 };
 
 #endif

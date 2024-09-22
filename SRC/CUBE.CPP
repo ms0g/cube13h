@@ -28,16 +28,18 @@ static const face faces[FACE_COUNT] = {
     {6, 1, 4, GREEN},
 };
 
-Cube::Cube() {
-    vertices[0] = vec3(-1, -1, -1); // 1
-    vertices[1] = vec3(-1,  1, -1); // 2
-    vertices[2] = vec3(1,  1, -1);  // 3
-    vertices[3] = vec3(1, -1, -1);  // 4
-    vertices[4] = vec3(1,  1,  1);  // 5
-    vertices[5] = vec3(1, -1,  1);  // 6
-    vertices[6] = vec3(-1,  1,  1); // 7
-    vertices[7] = vec3(-1, -1,  1); // 8
+static const vec3 vertices[V_COUNT] = {
+    vec3(-1, -1, -1),
+    vec3(-1,  1, -1),
+    vec3(1,  1, -1),
+    vec3(1, -1, -1),
+    vec3(1,  1,  1),
+    vec3(1, -1,  1),
+    vec3(-1,  1,  1),
+    vec3(-1, -1,  1),
+};
 
+Cube::Cube() {
     cameraPos.z(-5);
 }
 
@@ -70,47 +72,17 @@ void Cube::update(void) {
             transformedVertices[i] = transformedVertex;
         }
 
-        //  // Backface culling test to see if the current face should be projected
-        // vec3 vector_a = transformedVertices[0]; /*   A   */
-        // vec3 vector_b = transformedVertices[1]; /*  / \  */
-        // vec3 vector_c = transformedVertices[2]; /* C---B */
-
-        // // Get the vector subtraction of B-A and C-A
-        // vec3 vector_ab = vector_b - vector_a;
-        // vec3 vector_ac = vector_c - vector_a;
-        // vector_ab.normalize();
-        // vector_ac.normalize();
-      
-        // // Compute the face normal (using cross product to find perpendicular)
-        // vec3 normal = vector_ab.cross(vector_ac);
-        // //cout << " " << normal.x() << " " << normal.y() << " " << normal.z() << "\n";
-        // normal.normalize();
-
-        // // Find the vector between vertex A in the triangle and the camera origin
-        // vec3 camera_ray = cameraPos - vector_a;
-
-        // // Calculate how aligned the camera ray is with the face normal (using dot product)
-        // float dot_normal_camera = normal.dot(camera_ray);
-
-        // // Bypass the triangles that are looking away from the camera
-        // if (dot_normal_camera < 0) {
-        //     continue;
-        // }
-
         vec2 projectedPoints[3];
 
         // Loop all three vertices to perform projection
         for (int j = 0; j < 3; j++) {
             // Project the current vertex
-            projectedPoints[j] = project(transformedVertices[j]);
+            projectedPoints[j] = transformedVertices[j].project(FOV_FACTOR);
 
             // Scale and translate the projected points to the middle of the screen
-            projectedPoints[j].x += (WIDTH / 2);
-            projectedPoints[j].y += (HEIGHT / 2);
+            projectedPoints[j].x += (WIDTH >> 1);
+            projectedPoints[j].y += (HEIGHT >> 1);
         }
-
-        // Calculate the average depth for each face based on the vertices after transformation
-        float avg_depth = (transformedVertices[0].z() + transformedVertices[1].z() + transformedVertices[2].z()) / 3.0;
 
         triangle projectedTriangle = {
             {
@@ -118,18 +90,16 @@ void Cube::update(void) {
                 { projectedPoints[1].x, projectedPoints[1].y },
                 { projectedPoints[2].x, projectedPoints[2].y },
             },
-            face.color,
-            avg_depth
+            face.color
         };
         
-        triangles_to_render.push_back(projectedTriangle);
+        triangles.push_back(projectedTriangle);
     }
-
 }
 
 void Cube::draw(Renderer* renderer, unsigned int frames) {
-    for (int i = 0; i < triangles_to_render.size(); i++) {
-        triangle triangle = triangles_to_render[i];
+    for (int i = 0; i < triangles.size(); i++) {
+        triangle triangle = triangles[i];
 
         // Draw filled triangle
         renderer->triangle(
@@ -140,14 +110,6 @@ void Cube::draw(Renderer* renderer, unsigned int frames) {
         );  
     }
 
-    triangles_to_render.clear();
-}
-
-vec2 Cube::project(vec3& point) {
-    vec2 projected_point = {
-        (FOV_FACTOR * point.x()) / point.z(),
-        (FOV_FACTOR * point.y()) / point.z()
-    };
-    return projected_point;
+    triangles.clear();
 }
 

@@ -1,4 +1,4 @@
-#include "VEC3.H"
+#include "VEC.H"
 #include <MATH.H>
 
 vec3::vec3(): mX(0), mY(0), mZ(0) {}
@@ -37,17 +37,26 @@ void vec3::normalize(void) {
     mZ /= length;
 }
 
-float vec3::dot(const vec3& other) {
-    return mX * other.mX + mY * other.mY + mZ * other.mZ;
+float vec3::dot(const vec3& v) {
+    return mX * v.mX + mY * v.mY + mZ * v.mZ;
 
 }
 
-vec3 vec3::cross(const vec3& other) {
+vec3 vec3::cross(const vec3& v) {
     vec3 result;
 
-    result.x(mY * other.mZ - mZ * other.mY);
-    result.y(mZ * other.mX - mX * other.mZ);
-    result.z(mX * other.mY - mY * other.mX);
+    result.x(mY * v.mZ - mZ * v.mY);
+    result.y(mZ * v.mX - mX * v.mZ);
+    result.z(mX * v.mY - mY * v.mX);
+
+    return result;
+}
+
+vec2 vec3::project(int fov) {
+    vec2 result = {
+        (fov * mX) / mZ,
+        (fov * mY) / mZ
+    };
 
     return result;
 }
