@@ -54,9 +54,9 @@ void Cube::update(void) {
         faceVertices[2] = vertices[face.c - 1];
 
         vec3 transformedVertices[3];
-        
-        for (int i = 0; i < 3; i++) {
-            vec3 transformedVertex = faceVertices[i];
+        int j;
+        for (j = 0; j < 3; j++) {
+            vec3 transformedVertex = faceVertices[j];
 
             transformedVertex = transformedVertex.rotx(cubeRot.x());
             transformedVertex = transformedVertex.roty(cubeRot.y());
@@ -67,13 +67,13 @@ void Cube::update(void) {
             transformedVertex.z(z);
 
             // Save transformed vertex in the array of transformed vertices
-            transformedVertices[i] = transformedVertex;
+            transformedVertices[j] = transformedVertex;
         }
 
         vec2 projectedPoints[3];
 
         // Loop all three vertices to perform projection
-        for (int j = 0; j < 3; j++) {
+        for (j = 0; j < 3; j++) {
             // Project the current vertex
             projectedPoints[j] = transformedVertices[j].project(FOV_FACTOR);
 
@@ -95,7 +95,7 @@ void Cube::update(void) {
     }
 }
 
-void Cube::draw(Renderer* renderer, unsigned int frames) {
+void Cube::draw(Renderer* renderer) {
     for (int i = 0; i < triangles.size(); i++) {
         triangle triangle = triangles[i];
 

@@ -15,7 +15,7 @@ public:
 
     void update(void);
 
-    void draw(Renderer* renderer, unsigned int frames);
+    void draw(Renderer* renderer);
 
 private:
     vec3 cubeRot;

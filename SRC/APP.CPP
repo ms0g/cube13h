@@ -12,7 +12,7 @@ App::App() {
 
     ui = new UI();
 
-    initTimer();
+    _initTimer();
 
     initkb();
 
@@ -28,7 +28,7 @@ App::~App() {
 
     delete ui;
 
-    exitTimer();
+    _exitTimer();
 
     exitkb();
 }
@@ -52,7 +52,7 @@ void App::processInput(void) {
 void App::update(void) {
     frames++;
     
-    unsigned int currentTime = getTick();
+    unsigned int currentTime = _getTick();
     // runs every second
     if (currentTime - lastTime >= TICKS_PER_SECOND) {
         lastTime = currentTime;
@@ -70,7 +70,7 @@ void App::render(void) {
 
     ui->draw(renderer);
     
-    cube->draw(renderer, frames);
+    cube->draw(renderer);
 
     renderer->updateBuffer();
 }
