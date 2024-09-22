@@ -28,7 +28,7 @@ public:
 
     void putchar(int x, int y, char color, const int (*font)[5][5]);
 
-    void line(int x0, int y0, int x1, int y1, char color);
+    void dda(int x0, int y0, int x1, int y1, char color);
 
     void rectangle(int x, int y, int width, int height, char color);
     
