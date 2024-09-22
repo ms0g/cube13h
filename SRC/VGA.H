@@ -23,11 +23,11 @@ public:
 
     ~VGA();
 
-    void clroffscreen(char color);
+    inline void clroffscreen(char color);
   
-    void putpixel(int x, int y, char color);
+    inline void putpixel(int x, int y, char color);
 
-    void updateVRAM(void);
+    inline void updateVRAM(void);
 
 private:
     unsigned char far* VRAM;
