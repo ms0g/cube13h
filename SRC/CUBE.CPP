@@ -31,10 +31,10 @@ static const face faces[FACE_COUNT] = {
 static const vec3 vertices[V_COUNT] = {
     vec3(-1, -1, -1),
     vec3(-1,  1, -1),
-    vec3(1,  1, -1),
-    vec3(1, -1, -1),
-    vec3(1,  1,  1),
-    vec3(1, -1,  1),
+    vec3( 1,  1, -1),
+    vec3( 1, -1, -1),
+    vec3( 1,  1,  1),
+    vec3( 1, -1,  1),
     vec3(-1,  1,  1),
     vec3(-1, -1,  1),
 };
