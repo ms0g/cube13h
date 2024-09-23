@@ -1,16 +1,5 @@
 #include "RENDERER.H"
-
-#define abs(x) (x < 0 ? 0 - x : x)
-
-#define ceil(x) ((int)x + 1)
-
-#define floor(x) (int)x
-
-#define signbit(x) x < 0.0 ? 1 : 0
-
-#define round(x) signbit(x) ? ceil(x - 0.5) : floor(x + 0.5)
-
-#define swap(x, y) { (x)=(x)^(y); (y)=(x)^(y); (x)=(x)^(y); }
+#include "MATH.H"
 
 void Renderer::putpixel(int x, int y, char color) {
     vga.putpixel(x, y, color);
