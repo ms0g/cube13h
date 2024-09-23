@@ -12,28 +12,6 @@
 
 #define swap(x, y) { (x)=(x)^(y); (y)=(x)^(y); (x)=(x)^(y); }
 
-// vec3 computeBarycentricWeights(vec2 a, vec2 b, vec2 c, vec2 p) {
-//     vec2 ac = c - a;
-//     vec2 ab = b - a;
-//     vec2 ap = p - a;
-//     vec2 pc = c - p;
-//     vec2 pb = b - p;
-
-//     // Compute the area of the full parallegram/triangle ABC using 2D cross product
-//     float areaParallelogramABC = ac.cross(ab);
-
-//     // Alpha is the area of the small parallelogram/triangle PBC divided by the area of the full parallelogram/triangle ABC
-//     float alpha = pc.cross(pb) / areaParallelogramABC;
-
-//     // Beta is the area of the small parallelogram/triangle APC divided by the area of the full parallelogram/triangle ABC
-//     float beta = ac.cross(ap) / areaParallelogramABC;
-
-//     // Weight gamma is easily found since barycentric coordinates always add up to 1.0
-//     float gamma = 1 - alpha - beta;
-
-//     return vec3(alpha, beta, gamma);
-// }
-
 void Renderer::putpixel(int x, int y, char color) {
     vga.putpixel(x, y, color);
 }
