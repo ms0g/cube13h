@@ -1,6 +1,6 @@
 #include "UI.H"
-#include <STDLIB.H>
-#include <STRING.H>
+#include <stdlib.h>
+#include <string.h>
 #include "RENDERER.H"
 #include "FONTS.H"
 

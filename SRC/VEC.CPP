@@ -1,5 +1,5 @@
 #include "VEC.H"
-#include <MATH.H>
+#include <math.h>
 
 vec3::vec3(): mX(0), mY(0), mZ(0) {}
 
