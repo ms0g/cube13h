@@ -43,10 +43,8 @@ void Renderer::bresenham(int x0, int y0, int x1, int y1, char color) {
     int err = (dx > dy ? dx : -dy)/2;
     int e2;
 
-    for(;;){
+    while (x0 != x1 || y0 != y1) {
         vga.putpixel(x0, y0, color);
-        
-        if (x0 == x1 && y0 == y1) break;
         
         e2 = err;
         
