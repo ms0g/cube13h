@@ -35,6 +35,33 @@ void Renderer::dda(int x0, int y0, int x1, int y1, char color) {
     }
 }
 
+void Renderer::bresenham(int x0, int y0, int x1, int y1, char color) {
+    int dx = abs(x1 - x0);
+    int sx = x0 < x1 ? 1 : -1;
+    int dy = abs(y1 - y0);
+    int sy = y0 < y1 ? 1 : -1; 
+    int err = (dx > dy ? dx : -dy)/2;
+    int e2;
+
+    for(;;){
+        vga.putpixel(x0, y0, color);
+        
+        if (x0 == x1 && y0 == y1) break;
+        
+        e2 = err;
+        
+        if (e2 > -dx) {
+            err -= dy; 
+            x0 += sx; 
+        }
+
+        if (e2 < dy) { 
+            err += dx; 
+            y0 += sy; 
+        }
+    }
+}
+
 void Renderer::rectangle(int x, int y, int width, int height, char color) {
     for (int i = 0; i < width; i++) {
         for (int j = 0; j < height; j++) {
@@ -44,9 +71,9 @@ void Renderer::rectangle(int x, int y, int width, int height, char color) {
 }
 
 void Renderer::triangle(int x0, int y0, int x1, int y1, int x2, int y2, char color) {
-    dda(x0, y0, x1, y1, color);
-    dda(x1, y1, x2, y2, color);
-    dda(x2, y2, x0, y0, color);
+    bresenham(x0, y0, x1, y1, color);
+    bresenham(x1, y1, x2, y2, color);
+    bresenham(x2, y2, x0, y0, color);
 }
 
 void Renderer::circle(int xc, int yc, int r, char color) {
