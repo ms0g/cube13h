@@ -8,7 +8,7 @@ cube13h is a simple 3D graphics demonstration program written in Turbo C++ and x
 ## Features
 - 3D vertex transformations.
 - Perspective projection to simulate depth.
-- DDA(Digital Differential Analyzer) algorithm to draw lines between vertices to create the cube’s edges.
+- Bresenham's line algorithm to draw lines between vertices to create the cube’s edges.
 - Simple backbuffer implementation to reduce flickering and tearing.
 
 ## Prerequisites
