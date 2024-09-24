@@ -32,7 +32,7 @@ public:
 
     void rectangle(int x, int y, int width, int height, char color);
     
-    void triangle(int x0, int y0, int x1, int y1, int x2, int y2, unsigned char color);
+    void triangle(int x0, int y0, int x1, int y1, int x2, int y2, char color);
 
     /**
      * Bresenham’s circle drawing algorithm.

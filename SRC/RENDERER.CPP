@@ -43,7 +43,7 @@ void Renderer::rectangle(int x, int y, int width, int height, char color) {
     }
 }
 
-void Renderer::triangle(int x0, int y0, int x1, int y1, int x2, int y2, unsigned char color) {
+void Renderer::triangle(int x0, int y0, int x1, int y1, int x2, int y2, char color) {
     dda(x0, y0, x1, y1, color);
     dda(x1, y1, x2, y2, color);
     dda(x2, y2, x0, y0, color);
