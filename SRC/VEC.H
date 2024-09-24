@@ -13,13 +13,13 @@ public:
     vec3(const vec3& other);
     const vec3& operator=(const vec3& other);
 
-    float x(void) const { return mX; }
-    float y(void) const { return mY; }
-    float z(void) const { return mZ; }
+    inline float x(void) const { return mX; }
+    inline float y(void) const { return mY; }
+    inline float z(void) const { return mZ; }
     
-    void x(float v) { mX = v; }
-    void y(float v) { mY = v; }
-    void z(float v) { mZ = v; }
+    inline void x(float v) { mX = v; }
+    inline void y(float v) { mY = v; }
+    inline void z(float v) { mZ = v; }
 
     void sadd(float scalar);
     float len(void);
