@@ -89,7 +89,7 @@ void exitkb(void) {
 char kbhit(void) {
     if (_keys[ESC]) {
         return ESC;
-    } else {
-        return -1;
     }
+
+    return -1;
 }
