@@ -97,14 +97,14 @@ void Cube::update(void) {
 
 void Cube::draw(Renderer* renderer) {
     for (int i = 0; i < triangles.size(); i++) {
-        triangle triangle = triangles[i];
+        triangle tri = triangles[i];
 
         // Draw filled triangle
-        renderer->triangle(
-                triangle.points[0].x, triangle.points[0].y, // vertex A
-                triangle.points[1].x, triangle.points[1].y, // vertex B
-                triangle.points[2].x, triangle.points[2].y, // vertex C
-                triangle.color
+        renderer->drawTri(
+                tri.points[0].x, tri.points[0].y, // vertex A
+                tri.points[1].x, tri.points[1].y, // vertex B
+                tri.points[2].x, tri.points[2].y, // vertex C
+                tri.color
         );  
     }
 

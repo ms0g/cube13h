@@ -60,7 +60,7 @@ void Renderer::bresenham(int x0, int y0, int x1, int y1, char color) {
     }
 }
 
-void Renderer::rectangle(int x, int y, int width, int height, char color) {
+void Renderer::drawRect(int x, int y, int width, int height, char color) {
     for (int i = 0; i < width; i++) {
         for (int j = 0; j < height; j++) {
             vga.putpixel(x + i, y + j, color);
@@ -68,17 +68,17 @@ void Renderer::rectangle(int x, int y, int width, int height, char color) {
     }
 }
 
-void Renderer::triangle(int x0, int y0, int x1, int y1, int x2, int y2, char color) {
+void Renderer::drawTri(int x0, int y0, int x1, int y1, int x2, int y2, char color) {
     bresenham(x0, y0, x1, y1, color);
     bresenham(x1, y1, x2, y2, color);
     bresenham(x2, y2, x0, y0, color);
 }
 
-void Renderer::circle(int xc, int yc, int r, char color) {
+void Renderer::drawCircle(int xc, int yc, int r, char color) {
     int x = 0, y = r; 
     int d = 3 - 2 * r;
 
-    _circle(xc, yc, x, y, color); 
+    circle(xc, yc, x, y, color); 
     
     while (y >= x) { 
         // for each pixel we will 
@@ -96,11 +96,11 @@ void Renderer::circle(int xc, int yc, int r, char color) {
             d = d + 4 * x + 6;
         }
              
-        _circle(xc, yc, x, y, color);
+        circle(xc, yc, x, y, color);
     }
 }
 
-void Renderer::_circle(int xc, int yc, int x, int y, char color) { 
+void Renderer::circle(int xc, int yc, int x, int y, char color) { 
     vga.putpixel(xc+x, yc+y, color); 
     vga.putpixel(xc-x, yc+y, color); 
     vga.putpixel(xc+x, yc-y, color); 
