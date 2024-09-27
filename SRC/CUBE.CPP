@@ -84,9 +84,9 @@ void Cube::update(void) {
 
         triangle projectedTriangle = {
             {
-                { projectedPoints[0].x, projectedPoints[0].y },
-                { projectedPoints[1].x, projectedPoints[1].y },
-                { projectedPoints[2].x, projectedPoints[2].y },
+                {projectedPoints[0].x, projectedPoints[0].y},
+                {projectedPoints[1].x, projectedPoints[1].y},
+                {projectedPoints[2].x, projectedPoints[2].y},
             },
             face.color
         };
