@@ -22,7 +22,7 @@ public:
     inline void z(float v) { mZ = v; }
 
     void sadd(float scalar);
-    float len(void);
+    float invLen(void);
     void normalize(void);
     float dot(const vec3& v);
     vec3 cross(const vec3& v);

@@ -1,5 +1,6 @@
 #include "VEC.H"
 #include <math.h>
+#include "MATH.H"
 
 vec3::vec3(): mX(0), mY(0), mZ(0) {}
 
@@ -25,16 +26,16 @@ void vec3::sadd(float scalar) {
     mZ += scalar;
 }
 
-float vec3::len(void) {
-    return sqrt(mX * mX + mY * mY + mZ * mZ);
+float vec3::invLen(void) {
+    return invSqrt(mX * mX + mY * mY + mZ * mZ);
 }
 
 void vec3::normalize(void) {
-    float length = len();
+    float length = invLen();
     
-    mX /= length;
-    mY /= length;
-    mZ /= length;
+    mX *= length;
+    mY *= length;
+    mZ *= length;
 }
 
 float vec3::dot(const vec3& v) {

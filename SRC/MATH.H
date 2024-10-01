@@ -21,4 +21,6 @@ inline int round(float v) {
     return signbit(v) ? ceil(v - 0.5) : floor(v + 0.5);
 }
 
+double invSqrt(double n);
+
 #endif
