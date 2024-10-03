@@ -10,20 +10,20 @@ static const face faces[FACE_COUNT] = {
     {1, 2, 3, GREEN},
     {1, 3, 4, GREEN},
     // right
-    {4, 3, 5, GREEN},
-    {4, 5, 6, GREEN},
+    {4, 3, 5, CYAN},
+    {4, 5, 6, CYAN},
     // back
-    {6, 5, 7, GREEN},
-    {6, 7, 8, GREEN},
+    {6, 5, 7, BLUE},
+    {6, 7, 8, BLUE},
     // left
-    {8, 7, 2, GREEN},
-    {8, 2, 1, GREEN},
+    {8, 7, 2, RED},
+    {8, 2, 1, RED},
     // top
-    {2, 7, 5, GREEN},
-    {2, 5, 3, GREEN},
+    {2, 7, 5, LIGHTMAGENTA},
+    {2, 5, 3, LIGHTMAGENTA},
     // bottom
-    {6, 8, 1, GREEN},
-    {6, 1, 4, GREEN},
+    {6, 8, 1, LIGHTBLUE},
+    {6, 1, 4, LIGHTBLUE},
 };
 
 static const vec3 vertices[V_COUNT] = {
@@ -100,7 +100,7 @@ void Cube::draw(Renderer* renderer) {
         triangle tri = triangles[i];
 
         // Draw filled triangle
-        renderer->drawTri(
+        renderer->drawFilledTri(
                 tri.points[0].x, tri.points[0].y, // vertex A
                 tri.points[1].x, tri.points[1].y, // vertex B
                 tri.points[2].x, tri.points[2].y, // vertex C

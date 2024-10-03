@@ -74,6 +74,25 @@ void Renderer::drawTri(int x0, int y0, int x1, int y1, int x2, int y2, char colo
     bresenham(x2, y2, x0, y0, color);
 }
 
+ void Renderer::drawFilledTri(int x0, int y0, int x1, int y1, int x2, int y2, char color) {
+    int xmin = min(min(x0, x1), x2);
+    int ymin = min(min(y0, y1), y2);
+    int xmax = max(max(x0, x1), x2);
+    int ymax = max(max(y0, y1), y2);
+
+    for (int y = ymin; y < ymax; ++y) {
+        for (int x = xmin; x < xmax; ++x) {
+            int w0 = edgeCross(x1, y1, x2, y2, x, y);
+            int w1 = edgeCross(x2, y2, x0, y0, x, y);
+            int w2 = edgeCross(x0, y0, x1, y1, x, y);
+            
+            if ((w0 >= 0) && (w1 >= 0) && (w2 >= 0)) {
+                vga.putpixel(x, y, color);
+            }
+        }
+    }
+ }
+
 void Renderer::drawCircle(int xc, int yc, int r, char color) {
     int x = 0, y = r; 
     int d = 3 - 2 * r;

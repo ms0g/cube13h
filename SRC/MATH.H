@@ -21,6 +21,16 @@ inline int round(float v) {
     return signbit(v) ? ceil(v - 0.5) : floor(v + 0.5);
 }
 
+inline int min(int n0, int n1) {
+    return (n0 < n1) ? n0 : n1;
+}
+
+inline int max(int n0, int n1) {
+    return (n0 > n1) ? n0 : n1;
+}
+
 double invSqrt(double n);
+
+int edgeCross(int x0, int y0, int x1, int y1, int x2, int y2);
 
 #endif

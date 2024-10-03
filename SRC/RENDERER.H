@@ -36,6 +36,8 @@ public:
     
     void drawTri(int x0, int y0, int x1, int y1, int x2, int y2, char color);
 
+    void drawFilledTri(int x0, int y0, int x1, int y1, int x2, int y2, char color);
+
     /**
      * Bresenham’s circle drawing algorithm.
      * https://www.geeksforgeeks.org/bresenhams-circle-drawing-algorithm/
