@@ -1,5 +1,6 @@
 #include "CUBE.H"
 #include "RENDERER.H"
+#include <iostream.h>
 
 #define WIDTH 320
 #define HEIGHT 200
@@ -38,7 +39,7 @@ static const vec3 vertices[V_COUNT] = {
 };
 
 Cube::Cube() {
-    cameraPos.z(-5);
+    cameraPos.z(5);
 }
 
 void Cube::update(void) {
@@ -63,12 +64,22 @@ void Cube::update(void) {
             transformedVertex = transformedVertex.rotz(cubeRot.z());
 
             // Translate the vertex away from the camera
-            float z = transformedVertex.z() + cameraPos.z();
-            transformedVertex.z(z);
+            transformedVertex.z(transformedVertex.z() - cameraPos.z());
 
             // Save transformed vertex in the array of transformed vertices
             transformedVertices[j] = transformedVertex;
         }
+        
+        vec3 a = transformedVertices[0];
+        vec3 cpos = cameraPos; // Dont lose the original camera position
+        vec3 cameraRay = cpos - a;
+        
+        vec3 normal = computeNormal(transformedVertices);
+        
+        float dotNormalCamera = normal.dot(cameraRay);
+    
+        if (dotNormalCamera < 0) 
+            continue;
 
         vec2 projectedPoints[3];
 
