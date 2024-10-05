@@ -1,6 +1,5 @@
 #include "CUBE.H"
 #include "RENDERER.H"
-#include <iostream.h>
 
 #define WIDTH 320
 #define HEIGHT 200
@@ -54,8 +53,8 @@ void Cube::update(void) {
         faceVertices[1] = vertices[face.b - 1];
         faceVertices[2] = vertices[face.c - 1];
 
-        vec3 transformedVertices[3];
         int j;
+        vec3 transformedVertices[3];
         for (j = 0; j < 3; j++) {
             vec3 transformedVertex = faceVertices[j];
 
@@ -72,8 +71,8 @@ void Cube::update(void) {
         
         vec3 a = transformedVertices[0];
         vec3 cpos = cameraPos; // Dont lose the original camera position
-        vec3 cameraRay = cpos - a;
         
+        vec3 cameraRay = cpos - a;
         vec3 normal = computeNormal(transformedVertices);
         
         float dotNormalCamera = normal.dot(cameraRay);
@@ -82,7 +81,6 @@ void Cube::update(void) {
             continue;
 
         vec2 projectedPoints[3];
-
         // Loop all three vertices to perform projection
         for (j = 0; j < 3; j++) {
             // Project the current vertex
