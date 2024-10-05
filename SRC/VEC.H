@@ -11,7 +11,7 @@ public:
     vec3();
     vec3(float x, float y, float z);
     vec3(const vec3& other);
-    const vec3& operator=(const vec3& other);
+    vec3& operator=(const vec3& other);
 
     inline float x(void) const { return mX; }
     inline float y(void) const { return mY; }

@@ -1,21 +1,22 @@
 #include "VEC.H"
 #include <math.h>
 #include "MATH.H"
+#include <iostream.h>
 
 vec3::vec3(): mX(0), mY(0), mZ(0) {}
 
 vec3::vec3(float x, float y, float z): mX(x), mY(y), mZ(z) {}
 
 vec3::vec3(const vec3& other) {
-    mX = other.mX;
-    mY = other.mY;
-    mZ = other.mZ;
+    mX = other.x();
+    mY = other.y();
+    mZ = other.z();
 }
 
-const vec3& vec3::operator=(const vec3& other) {
-    mX = other.mX;
-    mY = other.mY;
-    mZ = other.mZ;
+vec3& vec3::operator=(const vec3& other) {
+    mX = other.x();
+    mY = other.y();
+    mZ = other.z();
 
     return *this;
 }
@@ -39,16 +40,16 @@ void vec3::normalize(void) {
 }
 
 float vec3::dot(const vec3& v) {
-    return mX * v.mX + mY * v.mY + mZ * v.mZ;
+    return mX * v.x() + mY * v.y() + mZ * v.z();
 
 }
 
 vec3 vec3::cross(const vec3& v) {
     vec3 result;
 
-    result.x(mY * v.mZ - mZ * v.mY);
-    result.y(mZ * v.mX - mX * v.mZ);
-    result.z(mX * v.mY - mY * v.mX);
+    result.x(mY * v.z() - mZ * v.y());
+    result.y(mZ * v.x() - mX * v.z());
+    result.z(mX * v.y() - mY * v.x());
 
     return result;
 }
@@ -91,17 +92,17 @@ vec3 vec3::rotz(float angle) {
 }
 
  vec3& vec3::operator+(const vec3 &other) { 
-    mX += other.mX;
-    mY += other.mY;
-    mZ += other.mZ;
+    mX += other.x();
+    mY += other.y();
+    mZ += other.z();
 
     return *this;
 }
 
  vec3& vec3::operator-(const vec3 &other) { 
-    mX -= other.mX;
-    mY -= other.mY;
-    mZ -= other.mZ;
+    mX -= other.x();
+    mY -= other.y();
+    mZ -= other.z();
 
     return *this;
 }
