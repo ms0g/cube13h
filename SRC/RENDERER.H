@@ -50,6 +50,8 @@ public:
 
 private:
    void circle(int xc, int yc, int x, int y, char color);
+
+   int isTopLeft(int x0, int y0, int x1, int y1);
    
    VGA vga;
 };
