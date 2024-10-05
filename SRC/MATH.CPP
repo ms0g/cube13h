@@ -16,10 +16,10 @@ double invSqrt(double n) {
 }
 
 int determinant(int x0, int y0, int x1, int y1, int x2, int y2) {
-    int v0v1_x = x1 - x0;
-    int v0v1_y = y1 - y0;
-    int v0v2_x = x2 - x0;
-    int v0v2_y = y2 - y0;
+    int v0v1x = x1 - x0;
+    int v0v1y = y1 - y0;
+    int v0v2x = x2 - x0;
+    int v0v2y = y2 - y0;
 
-    return (v0v1_x * v0v2_y) - (v0v1_y * v0v2_x);
+    return (v0v1x * v0v2y) - (v0v1y * v0v2x);
 }
