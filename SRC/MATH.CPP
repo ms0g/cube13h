@@ -15,7 +15,7 @@ double invSqrt(double n) {
     return y;
 }
 
-int edgeCross(int x0, int y0, int x1, int y1, int x2, int y2) {
+int determinant(int x0, int y0, int x1, int y1, int x2, int y2) {
     int v0v1_x = x1 - x0;
     int v0v1_y = y1 - y0;
     int v0v2_x = x2 - x0;

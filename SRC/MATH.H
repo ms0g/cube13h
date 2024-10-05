@@ -31,6 +31,6 @@ inline int max(int n0, int n1) {
 
 double invSqrt(double n);
 
-int edgeCross(int x0, int y0, int x1, int y1, int x2, int y2);
+int determinant(int x0, int y0, int x1, int y1, int x2, int y2);
 
 #endif
