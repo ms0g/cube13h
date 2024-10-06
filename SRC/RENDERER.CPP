@@ -1,10 +1,6 @@
 #include "RENDERER.H"
 #include "MATH.H"
 
-void Renderer::putpixel(int x, int y, char color) {
-    vga.putpixel(x, y, color);
-}
-
 void Renderer::putchar(int x, int y, char color, const int (*font)[5][5]) {
     for (int i = 0; i < 5; ++i) {
         for (int j = 0; j < 5; ++j) {
@@ -120,41 +116,12 @@ void Renderer::drawTri(int x0, int y0, int x1, int y1, int x2, int y2, char colo
     }
  }
 
-void Renderer::drawCircle(int xc, int yc, int r, char color) {
-    int x = 0, y = r; 
-    int d = 3 - 2 * r;
-
-    circle(xc, yc, x, y, color); 
-    
-    while (y >= x) { 
-        // for each pixel we will 
-        // draw all eight pixels 
-          
-        x++; 
-  
-        // check for decision parameter 
-        // and correspondingly  
-        // update d, x, y 
-        if (d > 0) { 
-            y--;  
-            d = d + 4 * (x - y) + 10; 
-        } else {
-            d = d + 4 * x + 6;
-        }
-             
-        circle(xc, yc, x, y, color);
-    }
+void Renderer::clear(char color) {
+    vga.clroffscreen(color);
 }
 
-void Renderer::circle(int xc, int yc, int x, int y, char color) { 
-    vga.putpixel(xc+x, yc+y, color); 
-    vga.putpixel(xc-x, yc+y, color); 
-    vga.putpixel(xc+x, yc-y, color); 
-    vga.putpixel(xc-x, yc-y, color); 
-    vga.putpixel(xc+y, yc+x, color); 
-    vga.putpixel(xc-y, yc+x, color); 
-    vga.putpixel(xc+y, yc-x, color); 
-    vga.putpixel(xc-y, yc-x, color); 
+void Renderer::updateBuffer(void) {
+    vga.updateVRAM();
 }
 
 int Renderer::isTopLeft(int x0, int y0, int x1, int y1) {
@@ -165,12 +132,4 @@ int Renderer::isTopLeft(int x0, int y0, int x1, int y1) {
     int isLeftEdge = edy < 0;
     
     return isTopEdge || isLeftEdge;
-}
-
-void Renderer::clear(char color) {
-    vga.clroffscreen(color);
-}
-
-void Renderer::updateBuffer(void) {
-    vga.updateVRAM();
 }
