@@ -6,13 +6,13 @@ vec3 computeNormal(vec3* vertices) {
     vec3 c = vertices[2];
 
     vec3 ac = c - a;
-    ac.normalize();
+    normalize(ac);
 
     vec3 ab = b - a;
-    ab.normalize();
+    normalize(ab);
         
-    vec3 normal = ab.cross(ac);
-    normal.normalize();
+    vec3 normal = cross(ab, ac);
+    normalize(normal);
 
     return normal;
 }

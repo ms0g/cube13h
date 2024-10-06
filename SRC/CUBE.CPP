@@ -38,11 +38,11 @@ static const vec3 vertices[V_COUNT] = {
 };
 
 Cube::Cube() {
-    cameraPos.z(5);
+    cameraPos.z = 5;
 }
 
 void Cube::update(void) {
-    cubeRot.sadd(0.01);
+    sadd(cubeRot, 0.01);
 
     for (int i = 0; i < FACE_COUNT; i++) {
         face face = faces[i];
@@ -58,24 +58,24 @@ void Cube::update(void) {
         for (j = 0; j < 3; j++) {
             vec3 transformedVertex = faceVertices[j];
 
-            transformedVertex = transformedVertex.rotx(cubeRot.x());
-            transformedVertex = transformedVertex.roty(cubeRot.y());
-            transformedVertex = transformedVertex.rotz(cubeRot.z());
+            transformedVertex = rotx(transformedVertex, cubeRot.x);
+            transformedVertex = roty(transformedVertex, cubeRot.y);
+            transformedVertex = rotz(transformedVertex, cubeRot.z);
 
             // Translate the vertex away from the camera
-            transformedVertex.z(transformedVertex.z() - cameraPos.z());
+            transformedVertex.z = transformedVertex.z - cameraPos.z;
 
             // Save transformed vertex in the array of transformed vertices
             transformedVertices[j] = transformedVertex;
         }
         
+        // Backface Culling
         vec3 a = transformedVertices[0];
-        vec3 cpos = cameraPos; // Dont lose the original camera position
         
-        vec3 cameraRay = cpos - a;
+        vec3 cameraRay = cameraPos - a;
         vec3 normal = computeNormal(transformedVertices);
         
-        float dotNormalCamera = normal.dot(cameraRay);
+        float dotNormalCamera = dot(normal, cameraRay);
     
         if (dotNormalCamera < 0) 
             continue;
@@ -84,7 +84,7 @@ void Cube::update(void) {
         // Loop all three vertices to perform projection
         for (j = 0; j < 3; j++) {
             // Project the current vertex
-            projectedPoints[j] = transformedVertices[j].project(FOV_FACTOR);
+            projectedPoints[j] = project(transformedVertices[j], FOV_FACTOR);
 
             // Scale and translate the projected points to the middle of the screen
             projectedPoints[j].x += (WIDTH >> 1);
