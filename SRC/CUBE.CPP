@@ -19,8 +19,8 @@ static const face faces[FACE_COUNT] = {
     {8, 7, 2, RED},
     {8, 2, 1, RED},
     // top
-    {2, 7, 5, LIGHTMAGENTA},
-    {2, 5, 3, LIGHTMAGENTA},
+    {2, 7, 5, MAGENTA},
+    {2, 5, 3, MAGENTA},
     // bottom
     {6, 8, 1, LIGHTBLUE},
     {6, 1, 4, LIGHTBLUE},
