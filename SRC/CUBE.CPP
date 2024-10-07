@@ -7,23 +7,23 @@
 
 static const face faces[FACE_COUNT] = {
     // front
-    {1, 2, 3, GREEN},
-    {1, 3, 4, GREEN},
+    {1, 2, 3, 0x50},
+    {1, 3, 4, 0x51},
     // right
-    {4, 3, 5, CYAN},
-    {4, 5, 6, CYAN},
+    {4, 3, 5, 0x40},
+    {4, 5, 6, 0x41},
     // back
-    {6, 5, 7, BLUE},
-    {6, 7, 8, BLUE},
+    {6, 5, 7, 0x22},
+    {6, 7, 8, 0x23},
     // left
-    {8, 7, 2, RED},
-    {8, 2, 1, RED},
+    {8, 7, 2, 0x2A},
+    {8, 2, 1, 0x2B},
     // top
-    {2, 7, 5, MAGENTA},
-    {2, 5, 3, MAGENTA},
+    {2, 7, 5, 0x28},
+    {2, 5, 3, 0x29},
     // bottom
-    {6, 8, 1, LIGHTBLUE},
-    {6, 1, 4, LIGHTBLUE},
+    {6, 8, 1, 0x36},
+    {6, 1, 4, 0x37},
 };
 
 static const vec3 vertices[V_COUNT] = {
