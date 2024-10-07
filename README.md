@@ -6,10 +6,12 @@ cube13h is a simple 3D graphics demonstration program written in Turbo C++ and x
 ![cube13h](IMG/cube13h.gif)
 
 ## Features
+- Triangle rasterization.
 - 3D vertex transformations.
 - Perspective projection to simulate depth.
+- Backface culling.
 - Bresenham's line algorithm to draw lines between vertices to create the cube’s edges.
-- Simple backbuffer implementation to reduce flickering and tearing.
+- Double buffering to reduce flickering and tearing.
 
 ## Prerequisites
 - Turbo C++ (>= 3.0)
