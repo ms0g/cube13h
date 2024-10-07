@@ -11,7 +11,7 @@ struct vec3 {
     float y;
     float z;
     
-    vec3(): x(0), y(0), z(0) {}
+    vec3(): x(0.0), y(0.0), z(0.0) {}
     vec3(float x, float y, float z): x(x), y(y), z(z) {}
     vec3(float* v) : x(v[0]), y(v[1]), z(v[2]) {}
     
