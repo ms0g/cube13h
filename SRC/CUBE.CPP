@@ -70,9 +70,7 @@ void Cube::update(void) {
         }
         
         // Backface Culling
-        vec3 a = transformedVertices[0];
-        
-        vec3 cameraRay = cameraPos - a;
+        vec3 cameraRay = cameraPos - transformedVertices[0];
         vec3 normal = computeNormal(transformedVertices);
         
         float dotNormalCamera = dot(normal, cameraRay);
