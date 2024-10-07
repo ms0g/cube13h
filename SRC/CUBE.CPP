@@ -10,20 +10,20 @@ static const face faces[FACE_COUNT] = {
     {1, 2, 3, GREEN},
     {1, 3, 4, GREEN},
     // right
-    {4, 3, 5, GREEN},
-    {4, 5, 6, GREEN},
+    {4, 3, 5, CYAN},
+    {4, 5, 6, CYAN},
     // back
-    {6, 5, 7, GREEN},
-    {6, 7, 8, GREEN},
+    {6, 5, 7, BLUE},
+    {6, 7, 8, BLUE},
     // left
-    {8, 7, 2, GREEN},
-    {8, 2, 1, GREEN},
+    {8, 7, 2, RED},
+    {8, 2, 1, RED},
     // top
-    {2, 7, 5, GREEN},
-    {2, 5, 3, GREEN},
+    {2, 7, 5, MAGENTA},
+    {2, 5, 3, MAGENTA},
     // bottom
-    {6, 8, 1, GREEN},
-    {6, 1, 4, GREEN},
+    {6, 8, 1, LIGHTBLUE},
+    {6, 1, 4, LIGHTBLUE},
 };
 
 static const vec3 vertices[V_COUNT] = {
@@ -38,11 +38,11 @@ static const vec3 vertices[V_COUNT] = {
 };
 
 Cube::Cube() {
-    cameraPos.z(-5);
+    cameraPos.z = 5;
 }
 
 void Cube::update(void) {
-    cubeRot.sadd(0.01);
+    sadd(cubeRot, 0.01);
 
     for (int i = 0; i < FACE_COUNT; i++) {
         face face = faces[i];
@@ -53,29 +53,38 @@ void Cube::update(void) {
         faceVertices[1] = vertices[face.b - 1];
         faceVertices[2] = vertices[face.c - 1];
 
-        vec3 transformedVertices[3];
         int j;
+        vec3 transformedVertices[3];
         for (j = 0; j < 3; j++) {
             vec3 transformedVertex = faceVertices[j];
 
-            transformedVertex = transformedVertex.rotx(cubeRot.x());
-            transformedVertex = transformedVertex.roty(cubeRot.y());
-            transformedVertex = transformedVertex.rotz(cubeRot.z());
+            transformedVertex = rotx(transformedVertex, cubeRot.x);
+            transformedVertex = roty(transformedVertex, cubeRot.y);
+            transformedVertex = rotz(transformedVertex, cubeRot.z);
 
             // Translate the vertex away from the camera
-            float z = transformedVertex.z() + cameraPos.z();
-            transformedVertex.z(z);
+            transformedVertex.z = transformedVertex.z - cameraPos.z;
 
             // Save transformed vertex in the array of transformed vertices
             transformedVertices[j] = transformedVertex;
         }
+        
+        // Backface Culling
+        vec3 a = transformedVertices[0];
+        
+        vec3 cameraRay = cameraPos - a;
+        vec3 normal = computeNormal(transformedVertices);
+        
+        float dotNormalCamera = dot(normal, cameraRay);
+    
+        if (dotNormalCamera < 0) 
+            continue;
 
         vec2 projectedPoints[3];
-
         // Loop all three vertices to perform projection
         for (j = 0; j < 3; j++) {
             // Project the current vertex
-            projectedPoints[j] = transformedVertices[j].project(FOV_FACTOR);
+            projectedPoints[j] = project(transformedVertices[j], FOV_FACTOR);
 
             // Scale and translate the projected points to the middle of the screen
             projectedPoints[j].x += (WIDTH >> 1);
@@ -100,7 +109,7 @@ void Cube::draw(Renderer* renderer) {
         triangle tri = triangles[i];
 
         // Draw filled triangle
-        renderer->drawTri(
+        renderer->drawFilledTri(
                 tri.points[0].x, tri.points[0].y, // vertex A
                 tri.points[1].x, tri.points[1].y, // vertex B
                 tri.points[2].x, tri.points[2].y, // vertex C

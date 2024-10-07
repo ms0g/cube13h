@@ -15,4 +15,6 @@ struct triangle {
     char color;
 };
 
+vec3 computeNormal(vec3* vertices);
+
 #endif
