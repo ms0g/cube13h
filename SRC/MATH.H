@@ -1,6 +1,8 @@
 #ifndef MATH_H
 #define MATH_H
 
+#include <math.h>
+
 inline int abs(int v) {
     return v < 0 ? 0 - v : v;
 }

@@ -1,5 +1,4 @@
 #include "VEC.H"
-#include <math.h>
 #include "MATH.H"
 
 void normalize(vec3& v) {
