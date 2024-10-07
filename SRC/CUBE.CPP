@@ -42,7 +42,7 @@ Cube::Cube() {
 }
 
 void Cube::update(void) {
-    sadd(cubeRot, 0.01);
+    sadd(cubeRot, 0.02);
 
     for (int i = 0; i < FACE_COUNT; i++) {
         face face = faces[i];
