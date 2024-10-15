@@ -3,18 +3,6 @@
 
 #include <math.h>
 
-inline int abs(int v) {
-    return v < 0 ? 0 - v : v;
-}
-
-inline int ceil(float v){
-    return (int)v + 1;
-} 
-
-inline int floor(float v) {
-    return (int)v;
-}
-
 inline int signbit(float v) {
     return v < 0.0 ? 1 : 0;
 }
