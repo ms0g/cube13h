@@ -3,15 +3,15 @@
 
 #include <math.h>
 
-inline int abs(int v) {
+inline int absf(int v) {
     return v < 0 ? 0 - v : v;
 }
 
-inline int ceil(float v){
+inline int ceilf(float v){
     return (int)v + 1;
 } 
 
-inline int floor(float v) {
+inline int floorf(float v) {
     return (int)v;
 }
 
@@ -20,7 +20,7 @@ inline int signbit(float v) {
 }
 
 inline int round(float v) {
-    return signbit(v) ? ceil(v - 0.5) : floor(v + 0.5);
+    return signbit(v) ? ceilf(v - 0.5) : floorf(v + 0.5);
 }
 
 inline int min(int n0, int n1) {
