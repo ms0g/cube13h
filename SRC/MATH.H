@@ -7,7 +7,7 @@ inline int absf(int v) {
     return v < 0 ? 0 - v : v;
 }
 
-inline int ceilf(float v){
+inline int ceilf(float v) {
     return (int)v + 1;
 } 
 
