@@ -66,7 +66,7 @@ void App::update(void) {
 }
 
 void App::render(void) {
-    renderer->clear(BLACK);
+    renderer->clear(0x0);
 
     ui->draw(renderer);
     
