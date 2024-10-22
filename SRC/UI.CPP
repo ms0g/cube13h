@@ -13,12 +13,12 @@ UI::UI() {
     fpsText.position.x = FPS_X;
     fpsText.position.y = FPS_Y;
     fpsText.val = 0;
-    fpsText.color = WHITE;
+    fpsText.color = 0xF;
 
     fpsNum.position.x = FPS_X + FPS_ADJ;
     fpsNum.position.y = FPS_Y;
     fpsNum.val = 0;
-    fpsNum.color = WHITE;
+    fpsNum.color = 0xF;
 
 }
 

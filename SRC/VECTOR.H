@@ -42,7 +42,7 @@ public:
 
     void push_back(T& value);
     
-    T& operator[](int index);
+    T& operator[](int index) const;
 
 private:
     T* mData;
@@ -188,7 +188,7 @@ void vector<T>::push_back(T& value) {
 }
 
 template <class T>
-T& vector<T>::operator[](int index) {
+T& vector<T>::operator[](int index) const {
     return mData[index];
 }
 
