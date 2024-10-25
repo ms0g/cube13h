@@ -24,11 +24,11 @@ static inline int round(float v) {
 }
 
 static inline int min(int n0, int n1) {
-    return (n0 < n1) ? n0 : n1;
+    return n1 ^ ((n0 ^ n1) & -(n0 < n1));
 }
 
 static inline int max(int n0, int n1) {
-    return (n0 > n1) ? n0 : n1;
+    return n1 ^ ((n0 ^ n1) & -(n0 > n1));
 }
 
 double invSqrt(double n);
