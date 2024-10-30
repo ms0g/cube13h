@@ -2,18 +2,18 @@
 #include "MATH.H"
 
 void normalize(vec3& v) {
-    float length = invLen(v);
+    double length = invLen(v);
     
     v.x *= length;
     v.y *= length;
     v.z *= length;
 }
 
-float invLen(const vec3& v) {
+double invLen(const vec3& v) {
     return invSqrt(v.x * v.x + v.y * v.y + v.z * v.z);
 }
 
-void sadd(vec3& v, float scalar) {
+void sadd(vec3& v, double scalar) {
     v.x += scalar;
     v.y += scalar;
     v.z += scalar;
@@ -28,7 +28,7 @@ vec2 project(const vec3& v, int fov) {
     return result;
 }
 
-vec3 rotx(const vec3& v, float angle) {
+vec3 rotx(const vec3& v, double angle) {
     vec3 result;
 
     result.x = v.x;
@@ -38,7 +38,7 @@ vec3 rotx(const vec3& v, float angle) {
     return result;
 }
 
-vec3 roty(const vec3& v,float angle) {
+vec3 roty(const vec3& v,double angle) {
     vec3 result;
 
     result.x = v.x * cos(angle) - v.z * sin(angle);
@@ -48,7 +48,7 @@ vec3 roty(const vec3& v,float angle) {
     return result;
 }
 
-vec3 rotz(const vec3& v, float angle) {
+vec3 rotz(const vec3& v, double angle) {
     vec3 result;
 
     result.x = v.x * cos(angle) - v.y * sin(angle);
@@ -58,7 +58,7 @@ vec3 rotz(const vec3& v, float angle) {
     return result;
 }
 
-float dot(const vec3& v0, const vec3& v1) {
+double dot(const vec3& v0, const vec3& v1) {
     return v0.x * v1.x + v0.y * v1.y + v0.z * v1.z;
 
 }

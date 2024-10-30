@@ -73,7 +73,7 @@ void Cube::update(void) {
         vec3 cameraRay = cameraPos - transformedVertices[0];
         vec3 normal = computeNormal(transformedVertices);
         
-        float dotNormalCamera = dot(normal, cameraRay);
+        double dotNormalCamera = dot(normal, cameraRay);
     
         if (dotNormalCamera < 0) 
             continue;
