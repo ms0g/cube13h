@@ -32,7 +32,7 @@ If you want to build cube13h from source, you'll need Turbo C++ and the related 
 
 ## License
 
-This project is licensed under the MIT License. See the LICENSE file for details.
+This project is licensed under the BSD 3-Clause License. See the LICENSE file for details.
 
 ## Credits
 
