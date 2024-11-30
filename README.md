@@ -1,6 +1,5 @@
 # cube13h
 
-## Overview
 cube13h is a simple 3D graphics demonstration program written in Turbo C++ and x86 assembly for PC DOS. It demonstrates basic graphics programming techniques to render and animate a 3D cube on the screen, in mode 13h (320x200) colors.
 
 ![cube13h](IMG/cube13h.gif)
@@ -32,7 +31,7 @@ If you want to build cube13h from source, you'll need Turbo C++ and the related 
 
 ## License
 
-This project is licensed under the MIT License. See the LICENSE file for details.
+This project is licensed under the BSD 3-Clause License. See the LICENSE file for details.
 
 ## Credits
 
