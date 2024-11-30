@@ -20,7 +20,6 @@ public:
 private:
     vec3 cubeRot;
     vec3 cameraPos;
-    vec2 projectedVertices[V_COUNT];
     vector<triangle> triangles;
 };
 
