@@ -8,7 +8,7 @@ public:
 
     void update(unsigned int fps);
     
-    void draw(Renderer* renderer);
+    void draw(const Renderer* renderer);
 
 private:
     struct UIElement {
@@ -22,9 +22,9 @@ private:
         char color;
     };
 
-    void drawText(const char* s, int x, int y, char color, Renderer* renderer);
+    void drawText(const char* s, int x, int y, char color, const Renderer* renderer);
     
-    void drawNumber(int value, int x, int y, char color, Renderer* renderer);
+    void drawNumber(int value, int x, int y, char color, const Renderer* renderer);
 
     UIElement fpsText;
     UIElement fpsNum;

@@ -19,7 +19,7 @@ private:
 
     void render(void);
 
-    Renderer* renderer;
+    const Renderer* renderer;
 
     Cube* cube;
 

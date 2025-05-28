@@ -102,7 +102,7 @@ void Cube::update(void) {
     }
 }
 
-void Cube::draw(Renderer* renderer) {
+void Cube::draw(const Renderer* renderer) {
     for (int i = 0; i < triangles.size(); i++) {
         triangle tri = triangles[i];
 

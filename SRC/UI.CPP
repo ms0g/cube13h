@@ -26,19 +26,19 @@ void UI::update(unsigned int fps) {
     fpsNum.val = fps;
 }
 
-void UI::draw(Renderer* renderer) {
+void UI::draw(const Renderer* renderer) {
     drawText("FPS:", fpsText.position.x, fpsText.position.y, fpsText.color, renderer);
     drawNumber(fpsNum.val, fpsNum.position.x, fpsNum.position.y, fpsNum.color, renderer);
 }
 
-void UI::drawText(const char* s, int x, int y, char color, Renderer* renderer) {
+void UI::drawText(const char* s, int x, int y, char color, const Renderer* renderer) {
     for (int i = 0; i < strlen(s); ++i) {
         renderer->putchar(x, y, color, asciiFontTable[(int)s[i]]);
         x += ADJ;
     }
 }
 
-void UI::drawNumber(int value, int x, int y, char color, Renderer* renderer) {
+void UI::drawNumber(int value, int x, int y, char color, const Renderer* renderer) {
     char strNum[4];
 
     itoa(value, strNum, 10);

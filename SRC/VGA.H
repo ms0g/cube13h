@@ -26,26 +26,26 @@ public:
 
     ~VGA();
 
-    void clroffscreen(char color);
+    void clroffscreen(char color) const;
   
-    void putpixel(int x, int y, char color);
+    void putpixel(int x, int y, char color) const;
 
-    void updateVRAM(void);
+    void updateVRAM(void) const;
 
 private:
     unsigned char far* VRAM;
     unsigned char far* offscreen;
 };
 
-inline void VGA::clroffscreen(char color) {
+inline void VGA::clroffscreen(char color) const {
     _fmemset(offscreen, color, VRAM_SIZE);
 }
 
-inline void VGA::putpixel(int x, int y, char color) {
+inline void VGA::putpixel(int x, int y, char color) const {
     offscreen[(y << 8) + (y << 6) + x] = color;
 }
 
-inline void VGA::updateVRAM(void) {
+inline void VGA::updateVRAM(void) const {
     _waitvretrace();
 
     _fmemcpy(VRAM, offscreen, VRAM_SIZE);

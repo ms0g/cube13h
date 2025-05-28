@@ -1,7 +1,7 @@
 #include "RENDERER.H"
 #include "MATH.H"
 
-void Renderer::putchar(int x, int y, char color, const int (*font)[5][5]) {
+void Renderer::putchar(int x, int y, char color, const int (*font)[5][5]) const {
     for (int i = 0; i < 5; ++i) {
         for (int j = 0; j < 5; ++j) {
             if ((*font)[j][i]) {
@@ -11,7 +11,7 @@ void Renderer::putchar(int x, int y, char color, const int (*font)[5][5]) {
     }
 }
 
-void Renderer::dda(int x0, int y0, int x1, int y1, char color) {
+void Renderer::dda(int x0, int y0, int x1, int y1, char color) const {
     int dx = x1 - x0;
     int dy = y1 - y0;
 
@@ -31,7 +31,7 @@ void Renderer::dda(int x0, int y0, int x1, int y1, char color) {
     }
 }
 
-void Renderer::bresenham(int x0, int y0, int x1, int y1, char color) {
+void Renderer::bresenham(int x0, int y0, int x1, int y1, char color) const {
     int dx = absf(x1 - x0);
     int sx = x0 < x1 ? 1 : -1;
     int dy = absf(y1 - y0);
@@ -56,7 +56,7 @@ void Renderer::bresenham(int x0, int y0, int x1, int y1, char color) {
     }
 }
 
-void Renderer::drawRect(int x, int y, int width, int height, char color) {
+void Renderer::drawRect(int x, int y, int width, int height, char color) const {
     for (int i = 0; i < width; i++) {
         for (int j = 0; j < height; j++) {
             vga.putpixel(x + i, y + j, color);
@@ -64,13 +64,13 @@ void Renderer::drawRect(int x, int y, int width, int height, char color) {
     }
 }
 
-void Renderer::drawTri(int x0, int y0, int x1, int y1, int x2, int y2, char color) {
+void Renderer::drawTri(int x0, int y0, int x1, int y1, int x2, int y2, char color) const {
     bresenham(x0, y0, x1, y1, color);
     bresenham(x1, y1, x2, y2, color);
     bresenham(x2, y2, x0, y0, color);
 }
 
- void Renderer::drawFilledTri(int x0, int y0, int x1, int y1, int x2, int y2, char color) {
+ void Renderer::drawFilledTri(int x0, int y0, int x1, int y1, int x2, int y2, char color) const {
     int xmin = min(min(x0, x1), x2);
     int ymin = min(min(y0, y1), y2);
     int xmax = max(max(x0, x1), x2);
@@ -116,15 +116,15 @@ void Renderer::drawTri(int x0, int y0, int x1, int y1, int x2, int y2, char colo
     }
  }
 
-void Renderer::clear(char color) {
+void Renderer::clear(char color) const {
     vga.clroffscreen(color);
 }
 
-void Renderer::updateBuffer(void) {
+void Renderer::updateBuffer(void) const {
     vga.updateVRAM();
 }
 
-int Renderer::isTopLeft(int x0, int y0, int x1, int y1) {
+int Renderer::isTopLeft(int x0, int y0, int x1, int y1) const {
     int edx = x1 - x0;
     int edy = y1 - y0;
     
