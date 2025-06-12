@@ -27,14 +27,14 @@ static const face faces[FACE_COUNT] = {
 };
 
 static const vec3 vertices[V_COUNT] = {
-    vec3(-1, -1, -1),
-    vec3(-1,  1, -1),
-    vec3( 1,  1, -1),
-    vec3( 1, -1, -1),
-    vec3( 1,  1,  1),
-    vec3( 1, -1,  1),
-    vec3(-1,  1,  1),
-    vec3(-1, -1,  1),
+    {-1, -1, -1},
+    {-1,  1, -1},
+    { 1,  1, -1},
+    { 1, -1, -1},
+    { 1,  1,  1},
+    { 1, -1,  1},
+    {-1,  1,  1},
+    {-1, -1,  1},
 };
 
 Cube::Cube() {
@@ -42,12 +42,16 @@ Cube::Cube() {
 }
 
 void Cube::update(void) {
-    sadd(cubeRot, 0.02);
+    sadd(&cubeRot, 0.02);
 
     for (int i = 0; i < FACE_COUNT; i++) {
         face face = faces[i];
         
-        vec3 faceVertices[3];
+        vec3 faceVertices[3] = {
+            {0, 0, 0},
+            {0, 0, 0},
+            {0, 0, 0}
+        };
 
         faceVertices[0] = vertices[face.a - 1];
         faceVertices[1] = vertices[face.b - 1];
@@ -58,9 +62,9 @@ void Cube::update(void) {
         for (j = 0; j < 3; j++) {
             vec3 transformedVertex = faceVertices[j];
 
-            transformedVertex = rotx(transformedVertex, cubeRot.x);
-            transformedVertex = roty(transformedVertex, cubeRot.y);
-            transformedVertex = rotz(transformedVertex, cubeRot.z);
+            transformedVertex = rotx(&transformedVertex, cubeRot.x);
+            transformedVertex = roty(&transformedVertex, cubeRot.y);
+            transformedVertex = rotz(&transformedVertex, cubeRot.z);
 
             // Translate the vertex away from the camera
             transformedVertex.z = transformedVertex.z - cameraPos.z;
@@ -70,10 +74,10 @@ void Cube::update(void) {
         }
         
         // Backface Culling
-        vec3 cameraRay = cameraPos - transformedVertices[0];
+        vec3 cameraRay = sub(&cameraPos, &transformedVertices[0]);
         vec3 normal = computeNormal(transformedVertices);
         
-        double dotNormalCamera = dot(normal, cameraRay);
+        double dotNormalCamera = dot(&normal, &cameraRay);
     
         if (dotNormalCamera < 0) 
             continue;
@@ -82,7 +86,7 @@ void Cube::update(void) {
         // Loop all three vertices to perform projection
         for (j = 0; j < 3; j++) {
             // Project the current vertex
-            projectedPoints[j] = project(transformedVertices[j], FOV_FACTOR);
+            projectedPoints[j] = project(&transformedVertices[j], FOV_FACTOR);
 
             // Scale and translate the projected points to the middle of the screen
             projectedPoints[j].x += (WIDTH >> 1);

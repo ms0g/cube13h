@@ -1,45 +1,45 @@
 #ifndef VEC_H
 #define VEC_H
  
-struct vec2 {
+typedef struct {
     double x;
     double y;
-};
+} vec2;
 
-struct vec3 {
+typedef struct {
     double x;
     double y;
     double z;
-    
-    vec3(): x(0.0), y(0.0), z(0.0) {}
-    vec3(double x, double y, double z): x(x), y(y), z(z) {}
-    vec3(double* v) : x(v[0]), y(v[1]), z(v[2]) {}
-    
-    vec3 operator+(const vec3 &other) const {
-        return vec3(x + other.x,  y + other.y, z + other.z);
-    }
+} vec3;
 
-    vec3 operator-(const vec3 &other) const {
-        return vec3(x - other.x,  y - other.y, z - other.z);
-    }
-};
+#ifdef __cplusplus
+extern "C" {
+#endif
 
-void normalize(vec3& v);
+void normalize(vec3* v);
 
-double invLen(const vec3& v);
+double invLen(const vec3* v);
 
-void sadd(vec3& v, double scalar);
+void sadd(vec3* v, const double scalar);
 
-vec2 project(const vec3& v, int fov);
+vec2 project(const vec3* v, const int fov);
 
-vec3 rotx(const vec3& v, double angle);
+vec3 rotx(const vec3* v, const double angle);
 
-vec3 roty(const vec3& v, double angle);
+vec3 roty(const vec3* v, const double angle);
 
-vec3 rotz(const vec3& v, double angle);
+vec3 rotz(const vec3* v, const double angle);
 
-double dot(const vec3& v0, const vec3& v1);
+vec3 add(const vec3* v0, const vec3* v1);
 
-vec3 cross(const vec3& v0, const vec3& v1);
+vec3 sub(const vec3* v0, const vec3* v1);
+
+double dot(const vec3* v0, const vec3* v1);
+
+vec3 cross(const vec3* v0, const vec3* v1);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif
