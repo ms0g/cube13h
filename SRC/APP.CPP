@@ -14,7 +14,7 @@ App::App() {
 
     _initTimer();
 
-    initkb();
+    kbInit();
 
     isRunning = 1;
 
@@ -30,7 +30,7 @@ App::~App() {
 
     _exitTimer();
 
-    exitkb();
+    kbExit();
 }
 
 void App::loop(void) {
@@ -42,7 +42,7 @@ void App::loop(void) {
 }
 
 void App::processInput(void) {
-    char key = kbhit();
+    char key = kbHit();
 
     if (key == ESC) {
         isRunning = 0;

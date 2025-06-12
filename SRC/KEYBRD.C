@@ -7,11 +7,11 @@
 #define KBC_BREAK   0x80
 #define SCP_KBC_DIS 0x80
 
-static volatile unsigned char _keys[256];
+static volatile unsigned char keys[256];
 
-static void interrupt (*old_irq)(...);
+static void interrupt (*old_irq)();
 
-static void interrupt kbc_irq_handler(...) {
+static void interrupt kbc_irq_handler() {
     unsigned char code, val = 1;
     
     asm {
@@ -26,7 +26,7 @@ static void interrupt kbc_irq_handler(...) {
         mov code, al
     }
 PRESSED:   
-    _keys[code] = val;
+    keys[code] = val;
     
     asm {
         in al, KBC_SCP
@@ -48,7 +48,7 @@ https://wiki.osdev.org/Interrupt_Vector_Table
 +-----------+-----------+
 4           2           0 
 */
-void initkb(void) {
+void kbInit(void) {
     asm {
         push bx
         push es
@@ -68,7 +68,7 @@ void initkb(void) {
     }
 }
 
-void exitkb(void) {
+void kbExit(void) {
     asm { 
         push bx
         push es
@@ -86,10 +86,18 @@ void exitkb(void) {
     }
 }
 
-char kbhit(void) {
-    if (_keys[ESC]) {
-        return ESC;
+unsigned char kbHit(void) {
+    if (keys[R_ARROW]) {
+        return R_ARROW;
     }
-
-    return -1;
+    
+    if (keys[L_ARROW]) {
+        return L_ARROW;
+    }
+    
+    if (keys[ESC]) {
+        return ESC;
+    } 
+    
+    return 0;
 }

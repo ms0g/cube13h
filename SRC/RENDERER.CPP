@@ -1,11 +1,19 @@
 #include "RENDERER.H"
+#include "VGA.H"
 #include "MATH.H"
+
+ Renderer::Renderer() {
+        vgaInit();
+    }
+Renderer::~Renderer() {
+        vgaExit();
+    }
 
 void Renderer::putchar(int x, int y, char color, const int (*font)[5][5]) const {
     for (int i = 0; i < 5; ++i) {
         for (int j = 0; j < 5; ++j) {
             if ((*font)[j][i]) {
-                vga.putpixel(x + i, y + j, color);
+                vgaPutPixel(x + i, y + j, color);
             }
         }
     }
@@ -24,7 +32,7 @@ void Renderer::dda(int x0, int y0, int x1, int y1, char color) const {
     float y = y0;
 
     for (int i = 0; i < step; ++i) {
-        vga.putpixel(round(x), round(y), color);
+        vgaPutPixel(round(x), round(y), color);
         
         x += xinc;
         y += yinc;
@@ -40,7 +48,7 @@ void Renderer::bresenham(int x0, int y0, int x1, int y1, char color) const {
     int e2;
 
     while (x0 != x1 || y0 != y1) {
-        vga.putpixel(x0, y0, color);
+        vgaPutPixel(x0, y0, color);
         
         e2 = err;
         
@@ -59,7 +67,7 @@ void Renderer::bresenham(int x0, int y0, int x1, int y1, char color) const {
 void Renderer::drawRect(int x, int y, int width, int height, char color) const {
     for (int i = 0; i < width; i++) {
         for (int j = 0; j < height; j++) {
-            vga.putpixel(x + i, y + j, color);
+            vgaPutPixel(x + i, y + j, color);
         }
     }
 }
@@ -102,7 +110,7 @@ void Renderer::drawTri(int x0, int y0, int x1, int y1, int x2, int y2, char colo
         
         for (int x = xmin; x < xmax; ++x) {
             if ((w0 >= 0) && (w1 >= 0) && (w2 >= 0)) {
-                vga.putpixel(x, y, color);
+                vgaPutPixel(x, y, color);
             }
 
             w0 += delta_w0_col;
@@ -117,11 +125,11 @@ void Renderer::drawTri(int x0, int y0, int x1, int y1, int x2, int y2, char colo
  }
 
 void Renderer::clear(char color) const {
-    vga.clroffscreen(color);
+    vgaClearOffscreen(color);
 }
 
 void Renderer::updateBuffer(void) const {
-    vga.updateVRAM();
+    vgaUpdateVram();
 }
 
 int Renderer::isTopLeft(int x0, int y0, int x1, int y1) const {
