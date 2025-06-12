@@ -1,7 +1,6 @@
 #ifndef APP_H
 #define APP_H
 
-class Renderer;
 class Cube;
 class UI;
 class App {
@@ -18,8 +17,6 @@ private:
     void update(void);
 
     void render(void);
-
-    const Renderer* renderer;
 
     Cube* cube;
 

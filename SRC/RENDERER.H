@@ -1,28 +1,30 @@
 #ifndef RENDERER_H
 #define RENDERER_H
 
-class Renderer {
-public:
-    Renderer();
-    ~Renderer();
-    void putchar(int x, int y, char color, const int (*font)[5][5]) const;
+#ifdef __cplusplus
+extern "C" {
+#endif
 
-    void dda(int x0, int y0, int x1, int y1, char color) const;
+void rndInit(void);
+
+void rndExit(void);
+
+void rndDDA(int x0, int y0, int x1, int y1, char color);
     
-    void bresenham(int x0, int y0, int x1, int y1, char color) const;
+void rndBresenham(int x0, int y0, int x1, int y1, char color);
 
-    void drawRect(int x, int y, int width, int height, char color) const;
+void rndDrawRect(int x, int y, int width, int height, char color);
     
-    void drawTri(int x0, int y0, int x1, int y1, int x2, int y2, char color) const;
+void rndDrawTri(int x0, int y0, int x1, int y1, int x2, int y2, char color);
 
-    void drawFilledTri(int x0, int y0, int x1, int y1, int x2, int y2, char color) const;
-    
-    void clear(char color) const;
+void rndDrawFilledTri(int x0, int y0, int x1, int y1, int x2, int y2, char color);
 
-    void updateBuffer(void) const;
+void rndClear(char color);
 
-private:
-    int isTopLeft(int x0, int y0, int x1, int y1) const;
-};
+void rndUpdateBuffer(void);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif

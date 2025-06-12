@@ -106,12 +106,12 @@ void Cube::update(void) {
     }
 }
 
-void Cube::draw(const Renderer* renderer) {
+void Cube::draw(void) {
     for (int i = 0; i < triangles.size(); i++) {
         triangle tri = triangles[i];
 
         // Draw filled triangle
-        renderer->drawFilledTri(
+        rndDrawFilledTri(
                 tri.points[0].x, tri.points[0].y, // vertex A
                 tri.points[1].x, tri.points[1].y, // vertex B
                 tri.points[2].x, tri.points[2].y, // vertex C

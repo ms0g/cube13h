@@ -6,11 +6,11 @@
 #include "KEYBRD.H"
 
 App::App() {
-    renderer = new Renderer();
+    rndInit();
 
     cube = new Cube();
 
-    ui = new UI();
+    //ui = new UI();
 
     _initTimer();
 
@@ -22,11 +22,11 @@ App::App() {
 }
 
 App::~App() {
-    delete renderer;
+    rndExit();
 
     delete cube;
 
-    delete ui;
+    //delete ui;
 
     _exitTimer();
 
@@ -50,27 +50,28 @@ void App::processInput(void) {
 }
 
 void App::update(void) {
-    frames++;
+    // frames++;
     
-    unsigned int currentTime = _getTick();
-    // runs every second
-    if (currentTime - lastTime >= TICKS_PER_SECOND) {
-        lastTime = currentTime;
-        fps = frames;
-        frames = 0;
-    }
+    // unsigned int currentTime = _getTick();
+    // // runs every second
+    // if (currentTime - lastTime >= TICKS_PER_SECOND) {
+    //     lastTime = currentTime;
+    //     fps = frames;
+    //     frames = 0;
+    // }
 
-    ui->update(fps);
+    //ui->update(fps);
 
     cube->update();
 }
 
 void App::render(void) {
-    renderer->clear(0x0);
+    rndClear(0x0);
 
-    ui->draw(renderer);
+    //ui->draw(renderer);
     
-    cube->draw(renderer);
 
-    renderer->updateBuffer();
+    cube->draw();
+
+    rndUpdateBuffer();
 }
