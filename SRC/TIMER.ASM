@@ -5,8 +5,8 @@ tick dw 0
 oldseg dw 0 ;Old Interrupt Vector Segment
 oldoff dw 0 ;Old Interrupt Vector Offset
 .code
-public __initTimer
-public __exitTimer
+public __tmrInit
+public __tmrExit
 public __getTick
 ; -------------------------------------------------------------
 ; void interrupt __tmr_irq_handler (...);                     ;
@@ -18,9 +18,9 @@ __tmr_irq_handler proc far
     iret
 __tmr_irq_handler endp
 ; -------------------------------------------------------------
-; void _initTimer(void)                                       ;
+; void _tmrInit(void)                                       ;
 ; -------------------------------------------------------------
-__initTimer proc
+__tmrInit proc
     ; https://wiki.osdev.org/Interrupt_Vector_Table
     ;   +-----------+-----------+
     ;   |  Segment  |  Offset   |
@@ -42,11 +42,11 @@ __initTimer proc
     pop es
     pop bx
     ret
-__initTimer endp
+__tmrInit endp
 ; -------------------------------------------------------------
-; void _exitTimer(void)                                       ;
+; void _tmrExit(void)                                       ;
 ; -------------------------------------------------------------
-__exitTimer proc
+__tmrExit proc
     push bx
     push es
     mov bx, TMR_IRQ * 4
@@ -61,7 +61,7 @@ __exitTimer proc
     pop es
     pop bx
     ret
-__exitTimer endp
+__tmrExit endp
 ; -------------------------------------------------------------
 ; unsigned int _getTick(void)                                 ;
 ; -------------------------------------------------------------

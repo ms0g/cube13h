@@ -11,9 +11,9 @@
 #define FACE_COUNT (6 * 2)
 
 static int isRunning;
-vec3 cubeRot;
-vec3 cameraPos;
-TriArray triangles;
+static vec3 cubeRot;
+static vec3 cameraPos;
+static TriArray triangles;
 
 static const Face faces[FACE_COUNT] = {
     // front
@@ -65,7 +65,6 @@ static void update(void) {
     vec3 transformedVertices[3];
     vec2 projectedPoints[3];
     Triangle projectedTriangle;
-
     double dotNormalCamera;
     
     sadd(&cubeRot, 0.02);
@@ -130,10 +129,10 @@ static void render(void) {
 
         // Draw filled triangle
         rndDrawFilledTri(
-                tri->points[0].x, tri->points[0].y, // vertex A
-                tri->points[1].x, tri->points[1].y, // vertex B
-                tri->points[2].x, tri->points[2].y, // vertex C
-                tri->color
+            tri->points[0].x, tri->points[0].y, // vertex A
+            tri->points[1].x, tri->points[1].y, // vertex B
+            tri->points[2].x, tri->points[2].y, // vertex C
+            tri->color
         );  
     }
 
@@ -150,7 +149,7 @@ void main(void) {
 
     rndInit();
     kbInit();
-	_initTimer();
+	_tmrInit();
     
 	taInit(&triangles, 12);
     
@@ -164,5 +163,5 @@ void main(void) {
 
     rndExit();
     kbExit();
-	_exitTimer();
+	_tmrExit();
 }

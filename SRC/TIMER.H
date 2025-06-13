@@ -5,9 +5,9 @@
 
 #define TICKS_PER_SECOND 18.2
 
-void _Cdecl _initTimer(void);
+void _Cdecl _tmrInit(void);
 
-void _Cdecl _exitTimer(void);
+void _Cdecl _tmrExit(void);
 
 unsigned int _Cdecl _getTick(void);
 
