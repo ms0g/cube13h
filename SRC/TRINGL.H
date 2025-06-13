@@ -21,21 +21,18 @@ typedef struct {
     Triangle* data;     
 } TriArray;   
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 vec3 computeNormal(vec3* vertices);
-
+// Triangle Array functions
 void taInit(TriArray* ta, int size);
-void taPushback(TriArray* ta, Triangle* tri);
-void taRemove(TriArray* ta, int index);
-Triangle* taAt(TriArray* ta, int index);
-void taClear(TriArray* ta);
-void taFree(TriArray* ta);
 
-#ifdef __cplusplus
-}
-#endif
+void taPushback(TriArray* ta, Triangle* tri);
+
+void taRemove(TriArray* ta, int index);
+
+Triangle* taAt(TriArray* ta, int index);
+
+void taClear(TriArray* ta);
+
+void taFree(TriArray* ta);
 
 #endif

@@ -17,15 +17,8 @@
 
 #define max(n0, n1) (n1 ^ ((n0 ^ n1) & -(n0 > n1)))
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 double invSqrt(double n);
 
 int determinant(int x0, int y0, int x1, int y1, int x2, int y2);
-#ifdef __cplusplus
-}
-#endif
 
 #endif

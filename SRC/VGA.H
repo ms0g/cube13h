@@ -20,9 +20,6 @@ enum COLORS {
     WHITE
 };
 
-#ifdef __cplusplus
-extern "C" {
-#endif
 void vgaInit(void);
 
 void vgaExit(void);
@@ -32,8 +29,5 @@ void vgaPutPixel(int x, int y, char color);
 void vgaClearOffscreen(char color);
 
 void vgaUpdateVram(void);
-#ifdef __cplusplus
-}
-#endif
 
 #endif

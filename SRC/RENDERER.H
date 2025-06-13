@@ -1,10 +1,6 @@
 #ifndef RENDERER_H
 #define RENDERER_H
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 void rndInit(void);
 
 void rndExit(void);
@@ -22,9 +18,5 @@ void rndDrawFilledTri(int x0, int y0, int x1, int y1, int x2, int y2, char color
 void rndClear(char color);
 
 void rndUpdateBuffer(void);
-
-#ifdef __cplusplus
-}
-#endif
 
 #endif

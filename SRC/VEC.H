@@ -12,10 +12,6 @@ typedef struct {
     double z;
 } vec3;
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 void normalize(vec3* v);
 
 double invLen(const vec3* v);
@@ -37,9 +33,5 @@ vec3 sub(const vec3* v0, const vec3* v1);
 double dot(const vec3* v0, const vec3* v1);
 
 vec3 cross(const vec3* v0, const vec3* v1);
-
-#ifdef __cplusplus
-}
-#endif
 
 #endif
