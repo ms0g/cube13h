@@ -28,7 +28,7 @@ Vec2 vecProject(const Vec3* v, const int fov) {
 }
 
 Vec3 vecRotx(const Vec3* v, const double angle) {
-    Vec3 result;
+    Vec3 result = {0, 0, 0};
 
     result.x = v->x;
     result.y = v->y * cos(angle) - v->z * sin(angle);
@@ -38,7 +38,7 @@ Vec3 vecRotx(const Vec3* v, const double angle) {
 }
 
 Vec3 vecRoty(const Vec3* v, const double angle) {
-    Vec3 result;
+    Vec3 result = {0, 0, 0};
 
     result.x = v->x * cos(angle) - v->z * sin(angle);
     result.y = v->y;
@@ -48,7 +48,7 @@ Vec3 vecRoty(const Vec3* v, const double angle) {
 }
 
 Vec3 vecRotz(const Vec3* v, const double angle) {
-    Vec3 result;
+    Vec3 result = {0, 0, 0};
 
     result.x = v->x * cos(angle) - v->y * sin(angle);
     result.y = v->x * sin(angle) + v->y * cos(angle);
@@ -58,7 +58,7 @@ Vec3 vecRotz(const Vec3* v, const double angle) {
 }
 
 Vec3 vecAdd(const Vec3* v0, const Vec3* v1) {
-    Vec3 result;
+    Vec3 result = {0, 0, 0};
 
     result.x = v0->x + v1->x;
     result.y = v0->y + v1->y;
@@ -68,7 +68,7 @@ Vec3 vecAdd(const Vec3* v0, const Vec3* v1) {
 }
 
 Vec3 vecSub(const Vec3* v0, const Vec3* v1) {
-    Vec3 result;
+    Vec3 result = {0, 0, 0};
 
     result.x = v0->x - v1->x;
     result.y = v0->y - v1->y;
@@ -83,7 +83,7 @@ double vecDot(const Vec3* v0, const Vec3* v1) {
 }
 
 Vec3 vecCross(const Vec3* v0, const Vec3* v1) {
-    Vec3 result;
+    Vec3 result = {0, 0, 0};
 
     result.x = v0->y * v1->z - v0->z * v1->y;
     result.y = v0->z * v1->x - v0->x * v1->z;
