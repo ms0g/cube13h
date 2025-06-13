@@ -11,7 +11,7 @@ typedef struct {
 } Face;
 
 typedef struct {
-    vec2 points[3];
+    Vec2 points[3];
     char color;
 } Triangle;
 
@@ -21,7 +21,7 @@ typedef struct {
     Triangle* data;     
 } TriArray;   
 
-vec3 computeNormal(vec3* vertices);
+Vec3 computeNormal(Vec3* vertices);
 // Triangle Array functions
 void taInit(TriArray* ta, int size);
 

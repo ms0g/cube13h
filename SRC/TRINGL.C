@@ -1,20 +1,20 @@
 #include "TRINGL.H"
 #include <stdlib.h>
 
-vec3 computeNormal(vec3* vertices) {
-    vec3 ab, ac, normal;
-    vec3 a = vertices[0];
-    vec3 b = vertices[1];
-    vec3 c = vertices[2];
+Vec3 computeNormal(Vec3* vertices) {
+    Vec3 ab, ac, normal;
+    Vec3 a = vertices[0];
+    Vec3 b = vertices[1];
+    Vec3 c = vertices[2];
 
-    ac = sub(&c, &a);
-    normalize(&ac);
+    ac = vecSub(&c, &a);
+    vecNormalize(&ac);
 
-    ab = sub(&b, &a);
-    normalize(&ab);
+    ab = vecSub(&b, &a);
+    vecNormalize(&ab);
         
-    normal = cross(&ab, &ac);
-    normalize(&normal);
+    normal = vecCross(&ab, &ac);
+    vecNormalize(&normal);
 
     return normal;
 }

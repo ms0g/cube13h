@@ -1,34 +1,34 @@
 #include "VEC.H"
 #include "MATH.H"
 
-void normalize(vec3* v) {
-    double length = invLen(v);
+void vecNormalize(Vec3* v) {
+    double length = vecInvLen(v);
     
     v->x *= length;
     v->y *= length;
     v->z *= length;
 }
 
-double invLen(const vec3* v) {
+double vecInvLen(const Vec3* v) {
     return invSqrt(v->x * v->x + v->y * v->y + v->z * v->z);
 }
 
-void sadd(vec3* v, const double scalar) {
+void vecSAdd(Vec3* v, const double scalar) {
     v->x += scalar;
     v->y += scalar;
     v->z += scalar;
 }
 
-vec2 project(const vec3* v, const int fov) {
-    vec2 result = {0, 0};
+Vec2 vecProject(const Vec3* v, const int fov) {
+    Vec2 result = {0, 0};
     result.x = (fov * v->x) / v->z;
     result.y = (fov * v->y) / v->z;
     
     return result;
 }
 
-vec3 rotx(const vec3* v, const double angle) {
-    vec3 result;
+Vec3 vecRotx(const Vec3* v, const double angle) {
+    Vec3 result;
 
     result.x = v->x;
     result.y = v->y * cos(angle) - v->z * sin(angle);
@@ -37,8 +37,8 @@ vec3 rotx(const vec3* v, const double angle) {
     return result;
 }
 
-vec3 roty(const vec3* v, const double angle) {
-    vec3 result;
+Vec3 vecRoty(const Vec3* v, const double angle) {
+    Vec3 result;
 
     result.x = v->x * cos(angle) - v->z * sin(angle);
     result.y = v->y;
@@ -47,8 +47,8 @@ vec3 roty(const vec3* v, const double angle) {
     return result;
 }
 
-vec3 rotz(const vec3* v, const double angle) {
-    vec3 result;
+Vec3 vecRotz(const Vec3* v, const double angle) {
+    Vec3 result;
 
     result.x = v->x * cos(angle) - v->y * sin(angle);
     result.y = v->x * sin(angle) + v->y * cos(angle);
@@ -57,8 +57,8 @@ vec3 rotz(const vec3* v, const double angle) {
     return result;
 }
 
-vec3 add(const vec3* v0, const vec3* v1) {
-    vec3 result;
+Vec3 vecAdd(const Vec3* v0, const Vec3* v1) {
+    Vec3 result;
 
     result.x = v0->x + v1->x;
     result.y = v0->y + v1->y;
@@ -67,8 +67,8 @@ vec3 add(const vec3* v0, const vec3* v1) {
     return result;
 }
 
-vec3 sub(const vec3* v0, const vec3* v1) {
-    vec3 result;
+Vec3 vecSub(const Vec3* v0, const Vec3* v1) {
+    Vec3 result;
 
     result.x = v0->x - v1->x;
     result.y = v0->y - v1->y;
@@ -77,13 +77,13 @@ vec3 sub(const vec3* v0, const vec3* v1) {
     return result;
 }
 
-double dot(const vec3* v0, const vec3* v1) {
+double vecDot(const Vec3* v0, const Vec3* v1) {
     return v0->x * v1->x + v0->y * v1->y + v0->z * v1->z;
 
 }
 
-vec3 cross(const vec3* v0, const vec3* v1) {
-    vec3 result;
+Vec3 vecCross(const Vec3* v0, const Vec3* v1) {
+    Vec3 result;
 
     result.x = v0->y * v1->z - v0->z * v1->y;
     result.y = v0->z * v1->x - v0->x * v1->z;

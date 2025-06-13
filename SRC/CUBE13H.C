@@ -11,8 +11,8 @@
 #define FACE_COUNT (6 * 2)
 
 static int isRunning;
-static vec3 cubeRot;
-static vec3 cameraPos;
+static Vec3 cubeRot;
+static Vec3 cameraPos;
 static TriArray triangles;
 
 static const Face faces[FACE_COUNT] = {
@@ -36,7 +36,7 @@ static const Face faces[FACE_COUNT] = {
     {6, 1, 4, 0x37},
 };
 
-static const vec3 vertices[V_COUNT] = {
+static const Vec3 vertices[V_COUNT] = {
     {-1, -1, -1},
     {-1,  1, -1},
     { 1,  1, -1},
@@ -58,16 +58,16 @@ static void processInput(void) {
 static void update(void) {
     int i, j;
     Face face;
-    vec3 cameraRay;
-    vec3 normal;
-    vec3 transformedVertex;
-    vec3 faceVertices[3];
-    vec3 transformedVertices[3];
-    vec2 projectedPoints[3];
-    Triangle projectedTriangle;
-    double dotNormalCamera;
+    Vec3 cameraRay;
+    Vec3 normal;
+    Vec3 transformedVertex;
+    Vec3 faceVertices[3];
+    Vec3 transformedVertices[3];
+    Vec2 vecProjectedPoints[3];
+    Triangle vecProjectedTriangle;
+    double vecDotNormalCamera;
     
-    sadd(&cubeRot, 0.02);
+    vecSAdd(&cubeRot, 0.02);
 
     for (i = 0; i < FACE_COUNT; i++) {
         face = faces[i];
@@ -79,9 +79,9 @@ static void update(void) {
         for (j = 0; j < 3; j++) {
             transformedVertex = faceVertices[j];
 
-            transformedVertex = rotx(&transformedVertex, cubeRot.x);
-            transformedVertex = roty(&transformedVertex, cubeRot.y);
-            transformedVertex = rotz(&transformedVertex, cubeRot.z);
+            transformedVertex = vecRotx(&transformedVertex, cubeRot.x);
+            transformedVertex = vecRoty(&transformedVertex, cubeRot.y);
+            transformedVertex = vecRotz(&transformedVertex, cubeRot.z);
 
             // Translate the vertex away from the camera
             transformedVertex.z = transformedVertex.z - cameraPos.z;
@@ -91,30 +91,30 @@ static void update(void) {
         }
         
         // Backface Culling
-        cameraRay = sub(&cameraPos, &transformedVertices[0]);
+        cameraRay = vecSub(&cameraPos, &transformedVertices[0]);
         normal = computeNormal(transformedVertices);
         
-        dotNormalCamera = dot(&normal, &cameraRay);
+        vecDotNormalCamera = vecDot(&normal, &cameraRay);
     
-        if (dotNormalCamera < 0) 
+        if (vecDotNormalCamera < 0) 
             continue;
 
-        // Loop all three vertices to perform projection
+        // Loop all three vertices to perform vecProjection
         for (j = 0; j < 3; j++) {
-            // Project the current vertex
-            projectedPoints[j] = project(&transformedVertices[j], FOV_FACTOR);
+            // vecProject the current vertex
+            vecProjectedPoints[j] = vecProject(&transformedVertices[j], FOV_FACTOR);
 
-            // Scale and translate the projected points to the middle of the screen
-            projectedPoints[j].x += (WIDTH >> 1);
-            projectedPoints[j].y += (HEIGHT >> 1);
+            // Scale and translate the vecProjected points to the middle of the screen
+            vecProjectedPoints[j].x += (WIDTH >> 1);
+            vecProjectedPoints[j].y += (HEIGHT >> 1);
         }
 
-        projectedTriangle.points[0] = projectedPoints[0];
-        projectedTriangle.points[1] = projectedPoints[1];
-        projectedTriangle.points[2] = projectedPoints[2];
-        projectedTriangle.color = face.color;
+        vecProjectedTriangle.points[0] = vecProjectedPoints[0];
+        vecProjectedTriangle.points[1] = vecProjectedPoints[1];
+        vecProjectedTriangle.points[2] = vecProjectedPoints[2];
+        vecProjectedTriangle.color = face.color;
         
-		taPushback(&triangles, &projectedTriangle);
+		taPushback(&triangles, &vecProjectedTriangle);
     }    
 }
 
