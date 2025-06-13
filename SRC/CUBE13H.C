@@ -65,9 +65,9 @@ static void update(void) {
     Vec3 transformedVertex;
     Vec3 faceVertices[3];
     Vec3 transformedVertices[3];
-    Vec2 vecProjectedPoints[3];
-    Triangle vecProjectedTriangle;
-    double vecDotNormalCamera;
+    Vec2 projectedPoints[3];
+    Triangle projectedTriangle;
+    double dotNormalCamera;
 
     frames++;
     currentTime = _getTick();
@@ -107,27 +107,27 @@ static void update(void) {
         cameraRay = vecSub(&cameraPos, &transformedVertices[0]);
         normal = computeNormal(transformedVertices);
         
-        vecDotNormalCamera = vecDot(&normal, &cameraRay);
+        dotNormalCamera = vecDot(&normal, &cameraRay);
     
-        if (vecDotNormalCamera < 0) 
+        if (dotNormalCamera < 0) 
             continue;
 
-        // Loop all three vertices to perform vecProjection
+        // Loop all three vertices to perform projection
         for (j = 0; j < 3; j++) {
-            // vecProject the current vertex
-            vecProjectedPoints[j] = vecProject(&transformedVertices[j], FOV_FACTOR);
+            // Project the current vertex
+            projectedPoints[j] = vecProject(&transformedVertices[j], FOV_FACTOR);
 
-            // Scale and translate the vecProjected points to the middle of the screen
-            vecProjectedPoints[j].x += (WIDTH >> 1);
-            vecProjectedPoints[j].y += (HEIGHT >> 1);
+            // Scale and translate the projected points to the middle of the screen
+            projectedPoints[j].x += (WIDTH >> 1);
+            projectedPoints[j].y += (HEIGHT >> 1);
         }
 
-        vecProjectedTriangle.points[0] = vecProjectedPoints[0];
-        vecProjectedTriangle.points[1] = vecProjectedPoints[1];
-        vecProjectedTriangle.points[2] = vecProjectedPoints[2];
-        vecProjectedTriangle.color = face.color;
+        projectedTriangle.points[0] = projectedPoints[0];
+        projectedTriangle.points[1] = projectedPoints[1];
+        projectedTriangle.points[2] = projectedPoints[2];
+        projectedTriangle.color = face.color;
         
-		taPushback(&triangles, &vecProjectedTriangle);
+		taPushback(&triangles, &projectedTriangle);
     }    
 }
 
