@@ -156,8 +156,6 @@ static void render(void) {
     rndUpdateBuffer();
 }
 
-
-
 void main(void) {
     // Initialize camera position
     cameraPos.x = 0;
