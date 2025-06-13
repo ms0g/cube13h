@@ -12,9 +12,12 @@ typedef struct {
         int x;
         int y;
     } position;
-      
-    int val;
-
+    
+    union {
+        int num;
+        const char* str;
+    } val;
+    
     char color;
 } UIElement;
 
@@ -27,22 +30,22 @@ static void drawNumber(int value, int x, int y, char color);
 void uiInit(void) {
     fpsText.position.x = FPS_X;
     fpsText.position.y = FPS_Y;
-    fpsText.val = 0;
+    fpsText.val.str = "FPS:";
     fpsText.color = 0xF;
 
     fpsNum.position.x = FPS_X + FPS_ADJ;
     fpsNum.position.y = FPS_Y;
-    fpsNum.val = 0;
+    fpsNum.val.num = 0;
     fpsNum.color = 0xF;
 }
 
 void uiUpdate(unsigned int fps) {
-    fpsNum.val = fps;
+    fpsNum.val.num = fps;
 }
 
 void uiDraw(void) {
-    drawText("FPS:", fpsText.position.x, fpsText.position.y, fpsText.color);
-    drawNumber(fpsNum.val, fpsNum.position.x, fpsNum.position.y, fpsNum.color);
+    drawText(fpsText.val.str, fpsText.position.x, fpsText.position.y, fpsText.color);
+    drawNumber(fpsNum.val.num, fpsNum.position.x, fpsNum.position.y, fpsNum.color);
 }
 
 static void drawText(const char* s, int x, int y, char color) {
