@@ -12,6 +12,17 @@ void rndExit(void) {
     vgaExit();
 }
 
+void rndPutchar(int x, int y, char color, const int (*font)[5][5]) {
+    int i, j;
+    for (i = 0; i < 5; ++i) {
+        for (j = 0; j < 5; ++j) {
+            if ((*font)[j][i]) {
+                vgaPutPixel(x + i, y + j, color);
+            }
+        }
+    }
+}
+
 void rndDDA(int x0, int y0, int x1, int y1, char color) {
     int dx = x1 - x0;
     int dy = y1 - y0;

@@ -5,6 +5,8 @@ void rndInit(void);
 
 void rndExit(void);
 
+void rndPutchar(int x, int y, char color, const int (*font)[5][5]);
+
 void rndDDA(int x0, int y0, int x1, int y1, char color);
     
 void rndBresenham(int x0, int y0, int x1, int y1, char color);

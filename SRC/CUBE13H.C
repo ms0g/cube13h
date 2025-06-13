@@ -1,4 +1,5 @@
 #include "VEC.H"
+#include "UI.H"
 #include "TRINGL.H"
 #include "TIMER.H"
 #include "KEYBRD.H"
@@ -10,10 +11,11 @@
 #define V_COUNT 8
 #define FACE_COUNT (6 * 2)
 
-static int isRunning;
 static Vec3 cubeRot;
 static Vec3 cameraPos;
 static TriArray triangles;
+static int isRunning;
+static unsigned int fps, frames, lastTime, currentTime;
 
 static const Face faces[FACE_COUNT] = {
     // front
@@ -66,6 +68,17 @@ static void update(void) {
     Vec2 vecProjectedPoints[3];
     Triangle vecProjectedTriangle;
     double vecDotNormalCamera;
+
+    frames++;
+    currentTime = _getTick();
+    // runs every second
+    if (currentTime - lastTime >= TICKS_PER_SECOND) {
+        lastTime = currentTime;
+        fps = frames;
+        frames = 0;
+    }
+    
+    uiUpdate(fps);
     
     vecSAdd(&cubeRot, 0.02);
 
@@ -124,8 +137,10 @@ static void render(void) {
 
   	rndClear(0x0);
 
+    uiDraw();
+
     for (i = 0; i < triangles.count; i++) {
-        tri = taAt(&triangles ,i);
+        tri = taAt(&triangles, i);
 
         // Draw filled triangle
         rndDrawFilledTri(
@@ -144,14 +159,24 @@ static void render(void) {
 
 
 void main(void) {
-	isRunning = 1;
+    // Initialize camera position
+    cameraPos.x = 0;
+    cameraPos.y = 0;
 	cameraPos.z = 5;
+    // Initialize cube rotation
+    cubeRot.x = 0.0;
+    cubeRot.y = 0.0;
+    cubeRot.z = 0.0;
+    
+    isRunning = 1;
+    fps = frames = lastTime = currentTime = 0;
 
     rndInit();
     kbInit();
 	_tmrInit();
-    
-	taInit(&triangles, 12);
+    uiInit();
+
+	taInit(&triangles, 2);
     
 	while (isRunning) {
         processInput();
