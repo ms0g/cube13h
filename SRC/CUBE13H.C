@@ -67,7 +67,6 @@ static void update(void) {
     Vec3 transformedVertices[3];
     Vec2 projectedPoints[3];
     Triangle projectedTriangle;
-    double dotNormalCamera;
 
     frames++;
     currentTime = _getTick();
@@ -106,10 +105,8 @@ static void update(void) {
         // Backface Culling
         cameraRay = vecSub(&cameraPos, &transformedVertices[0]);
         normal = computeNormal(transformedVertices);
-        
-        dotNormalCamera = vecDot(&normal, &cameraRay);
     
-        if (dotNormalCamera < 0) 
+        if (vecDot(&normal, &cameraRay) < 0) 
             continue;
 
         // Loop all three vertices to perform projection
