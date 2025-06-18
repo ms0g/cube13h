@@ -25,7 +25,7 @@ static UIElement fpsText;
 static UIElement fpsNum;
 
 static void drawText(const char* s, int x, int y, char color);
-static void drawNumber(int value, int x, int y, char color);
+static void drawNumber(int num, int x, int y, char color);
 
 void uiInit(void) {
     fpsText.position.x = FPS_X;
@@ -56,10 +56,10 @@ static void drawText(const char* s, int x, int y, char color) {
     }
 }
 
-static void drawNumber(int value, int x, int y, char color) {
+static void drawNumber(int num, int x, int y, char color) {
     char strNum[4];
 
-    itoa(value, strNum, 10);
+    itoa(num, strNum, 10);
         
     drawText(strNum, x, y, color);
 }
