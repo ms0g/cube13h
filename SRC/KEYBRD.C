@@ -94,6 +94,14 @@ unsigned char kbHit(void) {
     if (keys[L_ARROW]) {
         return L_ARROW;
     }
+
+    if (keys[U_ARROW]) {
+        return U_ARROW;
+    }
+
+    if (keys[D_ARROW]) {
+        return D_ARROW;
+    }
     
     if (keys[ESC]) {
         return ESC;

@@ -54,6 +54,10 @@ static void processInput(void) {
 
     if (key == ESC) {
         isRunning = 0;
+    } else if (key == U_ARROW) {
+        cameraPos.z -= 0.1; 
+    } else if (key == D_ARROW) {
+        cameraPos.z += 0.1;
     }
 }
 
