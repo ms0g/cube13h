@@ -15,23 +15,15 @@ typedef struct {
     char color;
 } Triangle;
 
-typedef struct TriArray {    
+typedef struct {    
     int count;      
     int capacity;   
-    Triangle* data;
-    void (*reserve)(struct TriArray*, int);
-    void (*pushback)(struct TriArray*, Triangle*);
-    void (*remove)(struct TriArray*, int);
-    Triangle* (*at)(struct TriArray*, int);
-    void (*clear)(struct TriArray*);
-    void (*free)(struct TriArray*);     
+    Triangle* data;     
 } TriArray;   
 
 Vec3 computeNormal(Vec3* vertices);
 // Triangle Array functions
-void taInit(TriArray* ta);
-
-void taReserve(TriArray* ta, int size);
+void taInit(TriArray* ta, int size);
 
 void taPushback(TriArray* ta, Triangle* tri);
 

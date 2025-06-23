@@ -128,7 +128,7 @@ static void update(void) {
         projectedTriangle.points[2] = projectedPoints[2];
         projectedTriangle.color = face.color;
         
-        triangles.pushback(&triangles, &projectedTriangle);
+		taPushback(&triangles, &projectedTriangle);
     }    
 }
 
@@ -141,7 +141,7 @@ static void render(void) {
     uiDraw();
 
     for (i = 0; i < triangles.count; i++) {
-        tri = triangles.at(&triangles, i);
+        tri = taAt(&triangles, i);
 
         // Draw filled triangle
         rndDrawFilledTri(
@@ -152,7 +152,7 @@ static void render(void) {
         );  
     }
 
-    triangles.clear(&triangles);
+   	taClear(&triangles);
 
     rndUpdateBuffer();
 }
@@ -175,8 +175,7 @@ void main(void) {
 	_tmrInit();
     uiInit();
 
-	taInit(&triangles);
-    triangles.reserve(&triangles, 2);
+	taInit(&triangles, 2);
     
 	while (isRunning) {
         processInput();
@@ -184,7 +183,7 @@ void main(void) {
         render();
     }
 
-    triangles.free(&triangles);
+	taFree(&triangles);
 
     rndExit();
     kbExit();

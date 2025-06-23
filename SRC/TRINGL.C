@@ -19,19 +19,7 @@ Vec3 computeNormal(Vec3* vertices) {
     return normal;
 }
 
-void taInit(TriArray* ta) {
-    ta->count = 0;
-    ta->capacity = 0;
-    ta->data = NULL;
-    ta->reserve = taReserve;
-    ta->pushback = taPushback;
-    ta->remove = taRemove;
-    ta->at = taAt;
-    ta->clear = taClear;
-    ta->free = taFree;
-}
-
-void taReserve(TriArray* ta, int size) {
+void taInit(TriArray* ta, int size) {
     ta->count = 0;
     ta->capacity = size;
     ta->data = (Triangle*)malloc(size * sizeof(Triangle));
