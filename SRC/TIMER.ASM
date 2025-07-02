@@ -66,7 +66,9 @@ __tmrExit endp
 ; unsigned int _getTick(void)                                 ;
 ; -------------------------------------------------------------
 __getTick proc
+    cli
     mov ax, tick
+    sti
     ret
 __getTick endp
 end
