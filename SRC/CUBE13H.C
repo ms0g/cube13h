@@ -158,11 +158,10 @@ static void render(void) {
 }
 
 void main(void) {
-    // Initialize camera position
     cameraPos.x = 0;
     cameraPos.y = 0;
 	cameraPos.z = 5;
-    // Initialize cube rotation
+    
     cubeRot.x = 0.0;
     cubeRot.y = 0.0;
     cubeRot.z = 0.0;
