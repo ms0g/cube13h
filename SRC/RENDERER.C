@@ -110,12 +110,12 @@ void rndDrawFilledTri(int x0, int y0, int x1, int y1, int x2, int y2, char color
     int w2_row = determinant(x0, y0, x1, y1, px, py) + bias2;
 
     int y, x;
-    for (y = ymin; y < ymax; ++y) {
+    for (y = ymin; y <= ymax; ++y) {
         int w0 = w0_row;
         int w1 = w1_row;
         int w2 = w2_row;
         
-        for (x = xmin; x < xmax; ++x) {
+        for (x = xmin; x <= xmax; ++x) {
             if ((w0 >= 0) && (w1 >= 0) && (w2 >= 0)) {
                 vgaPutPixel(x, y, color);
             }
