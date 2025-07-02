@@ -8,8 +8,8 @@
 #define WIDTH 320
 #define HEIGHT 200
 #define FOV_FACTOR 280
-#define V_COUNT 8
-#define FACE_COUNT (6 * 2)
+#define VERTEX_COUNT 8
+#define FACE_COUNT 12
 
 static Vec3 cubeRot;
 static Vec3 cameraPos;
@@ -38,7 +38,7 @@ static const Face faces[FACE_COUNT] = {
     {6, 1, 4, 0x37},
 };
 
-static const Vec3 vertices[V_COUNT] = {
+static const Vec3 vertices[VERTEX_COUNT] = {
     {-1, -1, -1},
     {-1,  1, -1},
     { 1,  1, -1},
