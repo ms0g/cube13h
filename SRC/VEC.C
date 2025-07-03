@@ -28,30 +28,36 @@ Vec2 vecProject(const Vec3* v, const int fov) {
 }
 
 Vec3 vecRotx(const Vec3* v, const double angle) {
+    double cosA = cos(angle);
+    double sinA = sin(angle);
     Vec3 result = {0, 0, 0};
 
     result.x = v->x;
-    result.y = v->y * cos(angle) - v->z * sin(angle);
-    result.z = v->y * sin(angle) + v->z * cos(angle);
+    result.y = v->y * cosA - v->z * sinA;
+    result.z = v->y * sinA + v->z * cosA;
    
     return result;
 }
 
 Vec3 vecRoty(const Vec3* v, const double angle) {
+    double cosA = cos(angle);
+    double sinA = sin(angle);
     Vec3 result = {0, 0, 0};
 
-    result.x = v->x * cos(angle) - v->z * sin(angle);
+    result.x = v->x * cosA - v->z * sinA;
     result.y = v->y;
-    result.z = v->x * sin(angle) + v->z * cos(angle);
+    result.z = v->x * sinA + v->z * cosA;
    
     return result;
 }
 
 Vec3 vecRotz(const Vec3* v, const double angle) {
+    double cosA = cos(angle);
+    double sinA = sin(angle);
     Vec3 result = {0, 0, 0};
 
-    result.x = v->x * cos(angle) - v->y * sin(angle);
-    result.y = v->x * sin(angle) + v->y * cos(angle);
+    result.x = v->x * cosA - v->y * sinA;
+    result.y = v->x * sinA + v->y * cosA;
     result.z = v->z;
    
     return result;
