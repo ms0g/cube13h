@@ -1,4 +1,5 @@
 #include "VEC.H"
+#include "VGA.H"
 #include "UI.H"
 #include "TRINGL.H"
 #include "TIMER.H"
@@ -136,7 +137,7 @@ static void render(void) {
     int i;
     Triangle* tri;
 
-  	rndClear(0x0);
+  	vgaClearOffscreen(0x0);
 
     uiDraw();
 
@@ -154,7 +155,7 @@ static void render(void) {
 
    	taClear(&triangles);
 
-    rndUpdateBuffer();
+    vgaUpdateVram();
 }
 
 void main(void) {
@@ -169,7 +170,7 @@ void main(void) {
     isRunning = 1;
     fps = frames = lastTime = currentTime = 0;
 
-    rndInit();
+    vgaInit();
     kbInit();
 	_tmrInit();
     uiInit();
@@ -184,7 +185,7 @@ void main(void) {
 
 	taFree(&triangles);
 
-    rndExit();
+    vgaExit();
     kbExit();
 	_tmrExit();
 }

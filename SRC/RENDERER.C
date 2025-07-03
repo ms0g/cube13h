@@ -4,14 +4,6 @@
 
 static int isTopLeft(int x0, int y0, int x1, int y1);
 
-void rndInit(void) {
-    vgaInit();
-}
-
-void rndExit(void) {
-    vgaExit();
-}
-
 void rndPutchar(int x, int y, char color, const int (*font)[5][5]) {
     int i, j;
     for (i = 0; i < 5; ++i) {
@@ -130,14 +122,6 @@ void rndDrawFilledTri(int x0, int y0, int x1, int y1, int x2, int y2, char color
         w2_row += delta_w2_row;
     }
  }
-
-void rndClear(char color) {
-    vgaClearOffscreen(color);
-}
-
-void rndUpdateBuffer(void) {
-    vgaUpdateVram();
-}
 
 static int isTopLeft(int x0, int y0, int x1, int y1) {
     int edx = x1 - x0;
