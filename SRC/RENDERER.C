@@ -3,6 +3,7 @@
 #include "MATH.H"
 
 static int isTopLeft(int x0, int y0, int x1, int y1);
+static int edgeFunction(int x0, int y0, int x1, int y1, int x2, int y2);
 
 void rndPutchar(int x, int y, char color, const int (*font)[5][5]) {
     int i, j;
@@ -97,9 +98,9 @@ void rndDrawFilledTri(int x0, int y0, int x1, int y1, int x2, int y2, char color
     int px = xmin;
     int py = ymin;
 
-    int w0_row = determinant(x1, y1, x2, y2, px, py) + bias0;
-    int w1_row = determinant(x2, y2, x0, y0, px, py) + bias1;
-    int w2_row = determinant(x0, y0, x1, y1, px, py) + bias2;
+    int w0_row = edgeFunction(x1, y1, x2, y2, px, py) + bias0;
+    int w1_row = edgeFunction(x2, y2, x0, y0, px, py) + bias1;
+    int w2_row = edgeFunction(x0, y0, x1, y1, px, py) + bias2;
 
     int y, x;
     for (y = ymin; y <= ymax; ++y) {
@@ -124,11 +125,9 @@ void rndDrawFilledTri(int x0, int y0, int x1, int y1, int x2, int y2, char color
  }
 
 static int isTopLeft(int x0, int y0, int x1, int y1) {
-    int edx = x1 - x0;
-    int edy = y1 - y0;
-    
-    int isTopEdge = (edy == 0) && edx > 0;
-    int isLeftEdge = edy < 0;
-    
-    return isTopEdge || isLeftEdge;
+   return (y0 < y1) || (y0 == y1 && x0 > x1);
+}
+
+static int edgeFunction(int x0, int y0, int x1, int y1, int x2, int y2) {
+    return (x1 - x0) * (y2 - y0) - (y1 - y0) * (x2 - x0);
 }
