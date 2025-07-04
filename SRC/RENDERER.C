@@ -125,7 +125,13 @@ void rndDrawFilledTri(int x0, int y0, int x1, int y1, int x2, int y2, char color
  }
 
 static int isTopLeft(int x0, int y0, int x1, int y1) {
-    return (y0 < y1) || (y0 == y1 && x0 > x1);
+    int edx = x1 - x0;
+    int edy = y1 - y0;
+
+    int isTopEdge = (edy == 0) && edx > 0;
+    int isLeftEdge = edy < 0;
+    
+    return isTopEdge || isLeftEdge;
 }
 
 static int edgeFunction(int x0, int y0, int x1, int y1, int x2, int y2) {
