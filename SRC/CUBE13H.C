@@ -50,6 +50,19 @@ static const Vec3 vertices[VERTEX_COUNT] = {
     {-1, -1,  1},
 };
 
+static void calculateFPS(void) {
+    frames++;
+    currentTime = _getTick();
+    // runs every second
+    if (currentTime - lastTime >= TICKS_PER_SECOND) {
+        lastTime = currentTime;
+        fps = frames;
+        frames = 0;
+    }
+    
+    uiUpdate(fps);
+}
+
 static void processInput(void) {
     char key = kbHit();
 
@@ -64,69 +77,58 @@ static void processInput(void) {
 
 static void update(void) {
     int i, j;
-    Face face;
-    Vec3 cameraRay;
-    Vec3 normal;
-    Vec3 transformedVertex;
-    Vec3 faceVertices[3];
-    Vec3 transformedVertices[3];
-    Vec2 projectedPoints[3];
+    Vec2 pp0, pp1, pp2;
+    Vec3 transformedVertices[VERTEX_COUNT];
     Triangle projectedTriangle;
 
-    frames++;
-    currentTime = _getTick();
-    // runs every second
-    if (currentTime - lastTime >= TICKS_PER_SECOND) {
-        lastTime = currentTime;
-        fps = frames;
-        frames = 0;
-    }
-    
-    uiUpdate(fps);
+    calculateFPS();
     
     vecSAdd(&cubeRot, 0.02);
 
+    for (i = 0; i < VERTEX_COUNT; i++) {
+        Vec3 transformedVertex = vertices[i];
+
+        // Rotate the vertex around the cube's center
+        transformedVertex = vecRotx(&transformedVertex, cubeRot.x);
+        transformedVertex = vecRoty(&transformedVertex, cubeRot.y);
+        transformedVertex = vecRotz(&transformedVertex, cubeRot.z);
+
+        // Translate the vertex away from the camera
+        transformedVertex.z = transformedVertex.z - cameraPos.z;
+
+        // Save transformed vertex in the array of transformed vertices
+        transformedVertices[i] = transformedVertex;
+    }
+
     for (i = 0; i < FACE_COUNT; i++) {
-        face = faces[i];
+        Face face = faces[i];
 
-        faceVertices[0] = vertices[face.a - 1];
-        faceVertices[1] = vertices[face.b - 1];
-        faceVertices[2] = vertices[face.c - 1];
-
-        for (j = 0; j < 3; j++) {
-            transformedVertex = faceVertices[j];
-
-            transformedVertex = vecRotx(&transformedVertex, cubeRot.x);
-            transformedVertex = vecRoty(&transformedVertex, cubeRot.y);
-            transformedVertex = vecRotz(&transformedVertex, cubeRot.z);
-
-            // Translate the vertex away from the camera
-            transformedVertex.z = transformedVertex.z - cameraPos.z;
-
-            // Save transformed vertex in the array of transformed vertices
-            transformedVertices[j] = transformedVertex;
-        }
+        Vec3 v0 = transformedVertices[face.a - 1];
+        Vec3 v1 = transformedVertices[face.b - 1];
+        Vec3 v2 = transformedVertices[face.c - 1];
         
         // Backface Culling
-        cameraRay = vecSub(&cameraPos, &transformedVertices[0]);
-        normal = computeNormal(transformedVertices);
+        Vec3 cameraRay = vecSub(&cameraPos, &v0);
+        Vec3 normal = computeNormal(&v0, &v1, &v2);
     
         if (vecDot(&normal, &cameraRay) < 0) 
             continue;
 
-        // Loop all three vertices to perform projection
-        for (j = 0; j < 3; j++) {
-            // Project the current vertex
-            projectedPoints[j] = vecProject(&transformedVertices[j], FOV_FACTOR);
+        pp0 = vecProject(&v0, FOV_FACTOR);
+        pp0.x += (WIDTH >> 1);
+        pp0.y += (HEIGHT >> 1);
+        projectedTriangle.points[0] = pp0;
 
-            // Scale and translate the projected points to the middle of the screen
-            projectedPoints[j].x += (WIDTH >> 1);
-            projectedPoints[j].y += (HEIGHT >> 1);
-        }
+        pp1 = vecProject(&v1, FOV_FACTOR);
+        pp1.x += (WIDTH >> 1);
+        pp1.y += (HEIGHT >> 1);
+        projectedTriangle.points[1] = pp1;
 
-        projectedTriangle.points[0] = projectedPoints[0];
-        projectedTriangle.points[1] = projectedPoints[1];
-        projectedTriangle.points[2] = projectedPoints[2];
+        pp2 = vecProject(&v2, FOV_FACTOR);
+        pp2.x += (WIDTH >> 1);
+        pp2.y += (HEIGHT >> 1);
+        projectedTriangle.points[2] = pp2;
+
         projectedTriangle.color = face.color;
         
 		taPushback(&triangles, &projectedTriangle);
