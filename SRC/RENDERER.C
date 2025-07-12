@@ -2,8 +2,8 @@
 #include "VGA.H"
 #include "MATH.H"
 
-static int isTopLeft(int x0, int y0, int x1, int y1);
-static int edgeFunction(int x0, int y0, int x1, int y1, int x2, int y2);
+#define isTopLeft(x0, y0, x1, y1) ((y1 - y0) < 0 || ((y1 - y0) == 0 && (x1 - x0) > 0))
+#define edgeFunction(x0, y0, x1, y1, x2, y2) ((x1 - x0) * (y2 - y0) - (y1 - y0) * (x2 - x0))
 
 void rndPutchar(int x, int y, char color, const int (*font)[5][5]) {
     int i, j;
@@ -109,7 +109,7 @@ void rndDrawFilledTri(int x0, int y0, int x1, int y1, int x2, int y2, char color
         int w2 = w2_row;
         
         for (x = xmin; x <= xmax; ++x) {
-            if ((w0 >= 0) && (w1 >= 0) && (w2 >= 0)) {
+            if ((w0 | w1 | w2 ) >= 0) {
                 vgaPutPixel(x, y, color);
             }
 
@@ -123,17 +123,3 @@ void rndDrawFilledTri(int x0, int y0, int x1, int y1, int x2, int y2, char color
         w2_row += delta_w2_row;
     }
  }
-
-static int isTopLeft(int x0, int y0, int x1, int y1) {
-    int edx = x1 - x0;
-    int edy = y1 - y0;
-
-    int isTopEdge = (edy == 0) && edx > 0;
-    int isLeftEdge = edy < 0;
-    
-    return isTopEdge || isLeftEdge;
-}
-
-static int edgeFunction(int x0, int y0, int x1, int y1, int x2, int y2) {
-    return (x1 - x0) * (y2 - y0) - (y1 - y0) * (x2 - x0);
-}
