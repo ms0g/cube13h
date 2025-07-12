@@ -59,8 +59,6 @@ static void calculateFPS(void) {
         fps = frames;
         frames = 0;
     }
-    
-    uiUpdate(fps);
 }
 
 static void processInput(void) {
@@ -82,6 +80,8 @@ static void update(void) {
     Triangle projectedTriangle;
 
     calculateFPS();
+
+    uiUpdate(fps);
     
     vecSAdd(&cubeRot, 0.02);
 
