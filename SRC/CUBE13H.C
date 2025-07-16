@@ -75,7 +75,7 @@ static void processInput(void) {
 
 static void update(void) {
     int i, j;
-    Vec2 pp0, pp1, pp2;
+    Vec2 pv0, pv1, pv2;
     Vec3 transformedVertices[VERTEX_COUNT];
     Triangle projectedTriangle;
 
@@ -114,20 +114,20 @@ static void update(void) {
         if (vecDot(&normal, &cameraRay) < 0) 
             continue;
 
-        pp0 = vecProject(&v0, FOV_FACTOR);
-        pp0.x += (WIDTH >> 1);
-        pp0.y += (HEIGHT >> 1);
-        projectedTriangle.points[0] = pp0;
+        pv0 = vecProject(&v0, FOV_FACTOR);
+        pv0.x += (WIDTH >> 1);
+        pv0.y += (HEIGHT >> 1);
+        projectedTriangle.points[0] = pv0;
 
-        pp1 = vecProject(&v1, FOV_FACTOR);
-        pp1.x += (WIDTH >> 1);
-        pp1.y += (HEIGHT >> 1);
-        projectedTriangle.points[1] = pp1;
+        pv1 = vecProject(&v1, FOV_FACTOR);
+        pv1.x += (WIDTH >> 1);
+        pv1.y += (HEIGHT >> 1);
+        projectedTriangle.points[1] = pv1;
 
-        pp2 = vecProject(&v2, FOV_FACTOR);
-        pp2.x += (WIDTH >> 1);
-        pp2.y += (HEIGHT >> 1);
-        projectedTriangle.points[2] = pp2;
+        pv2 = vecProject(&v2, FOV_FACTOR);
+        pv2.x += (WIDTH >> 1);
+        pv2.y += (HEIGHT >> 1);
+        projectedTriangle.points[2] = pv2;
 
         projectedTriangle.color = face.color;
         
