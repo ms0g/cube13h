@@ -8,6 +8,8 @@
 
 #define WIDTH 320
 #define HEIGHT 200
+#define HALF_WIDTH 160
+#define HALF_HEIGHT 100
 #define FOV_FACTOR 280
 #define VERTEX_COUNT 8
 #define FACE_COUNT 12
@@ -115,18 +117,18 @@ static void update(void) {
             continue;
 
         pv0 = vecProject(&v0, FOV_FACTOR);
-        pv0.x += (WIDTH >> 1);
-        pv0.y += (HEIGHT >> 1);
+        pv0.x += HALF_WIDTH;
+        pv0.y += HALF_HEIGHT ;
         projectedTriangle.points[0] = pv0;
 
         pv1 = vecProject(&v1, FOV_FACTOR);
-        pv1.x += (WIDTH >> 1);
-        pv1.y += (HEIGHT >> 1);
+        pv1.x += HALF_WIDTH;
+        pv1.y += HALF_HEIGHT ;
         projectedTriangle.points[1] = pv1;
 
         pv2 = vecProject(&v2, FOV_FACTOR);
-        pv2.x += (WIDTH >> 1);
-        pv2.y += (HEIGHT >> 1);
+        pv2.x += HALF_WIDTH;
+        pv2.y += HALF_HEIGHT ;
         projectedTriangle.points[2] = pv2;
 
         projectedTriangle.color = face.color;
