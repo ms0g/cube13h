@@ -64,19 +64,18 @@ static void calculateFPS(void) {
 }
 
 static void processInput(void) {
-    char key = kbHit();
-
-    if (key == ESC) {
+    if (kbHit(ESC)) {
         isRunning = 0;
-    } else if (key == U_ARROW) {
+    } else if (kbHit(U_ARROW)) {
         cameraPos.z -= 0.1; 
-    } else if (key == D_ARROW) {
+    } else if (kbHit(D_ARROW)) {
         cameraPos.z += 0.1;
     }
 }
 
 static void update(void) {
     int i, j;
+    Vec2 pv0, pv1, pv2;
     Vec3 transformedVertices[VERTEX_COUNT];
     Triangle projectedTriangle;
 
