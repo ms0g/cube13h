@@ -77,7 +77,6 @@ static void processInput(void) {
 
 static void update(void) {
     int i, j;
-    Vec2 pv0, pv1, pv2;
     Vec3 transformedVertices[VERTEX_COUNT];
     Triangle projectedTriangle;
 
@@ -105,28 +104,28 @@ static void update(void) {
     for (i = 0; i < FACE_COUNT; i++) {
         Face face = faces[i];
 
-        Vec3 v0 = transformedVertices[face.a - 1];
-        Vec3 v1 = transformedVertices[face.b - 1];
-        Vec3 v2 = transformedVertices[face.c - 1];
+        Vec3 fv0 = transformedVertices[face.a - 1];
+        Vec3 fv1 = transformedVertices[face.b - 1];
+        Vec3 fv2 = transformedVertices[face.c - 1];
         
         // Backface Culling
-        Vec3 cameraRay = vecSub(&cameraPos, &v0);
-        Vec3 normal = computeNormal(&v0, &v1, &v2);
+        Vec3 cameraRay = vecSub(&cameraPos, &fv0);
+        Vec3 normal = computeNormal(&fv0, &fv1, &fv2);
     
         if (vecDot(&normal, &cameraRay) < 0) 
             continue;
 
-        pv0 = vecProject(&v0, FOV_FACTOR);
+        pv0 = vecProject(&fv0, FOV_FACTOR);
         pv0.x += HALF_WIDTH;
         pv0.y += HALF_HEIGHT ;
         projectedTriangle.points[0] = pv0;
 
-        pv1 = vecProject(&v1, FOV_FACTOR);
+        pv1 = vecProject(&fv1, FOV_FACTOR);
         pv1.x += HALF_WIDTH;
         pv1.y += HALF_HEIGHT ;
         projectedTriangle.points[1] = pv1;
 
-        pv2 = vecProject(&v2, FOV_FACTOR);
+        pv2 = vecProject(&fv2, FOV_FACTOR);
         pv2.x += HALF_WIDTH;
         pv2.y += HALF_HEIGHT ;
         projectedTriangle.points[2] = pv2;
