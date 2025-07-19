@@ -87,5 +87,9 @@ void kbExit(void) {
 }
 
 int kbHit(KeyCode key) {
+    if (key < 0 || key >= 256) {
+        return 0;
+    }
+
     return keys[key];
 }
