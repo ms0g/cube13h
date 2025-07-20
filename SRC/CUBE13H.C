@@ -79,7 +79,7 @@ static void update(void) {
     Vec3 cameraRay, normal;
     Vec3 faceVertices[3];
     Vec3 transformedVertices[VERTEX_COUNT];
-    Mat3 rotMat, rotx, roty, rotz;
+    Mat3 rotMat, tempMat, rotx, roty, rotz;
     Triangle projectedTriangle;
 
     calculateFPS();
@@ -88,27 +88,29 @@ static void update(void) {
     
     vecSAdd(&cubeRot, 0.02);
 
-    rotx = mtxRotx(cubeRot.x);
-    roty = mtxRoty(cubeRot.y);
-    rotz = mtxRotz(cubeRot.z);
+    mtxRotx(&rotx, cubeRot.x);
+    mtxRoty(&roty, cubeRot.y);
+    mtxRotz(&rotz, cubeRot.z);
 
-    rotMat = mtxMulMat3(&rotx, &roty);
-    rotMat = mtxMulMat3(&rotMat, &rotz);
+    mtxMulMat3(&tempMat, &rotx, &roty);
+    mtxMulMat3(&rotMat, &tempMat, &rotz);
 
     for (i = 0; i < VERTEX_COUNT; i++) {
+        Vec3 rotatedVertex;
         Vec3 transformedVertex = vertices[i];
 
         // Rotate the vertex around the cube's center
-        transformedVertex = mtxMulVec3(&rotMat, &transformedVertex);
+        mtxMulVec3(&rotatedVertex, &rotMat, &transformedVertex);
 
         // Translate the vertex away from the camera
-        transformedVertex.z = transformedVertex.z - cameraPos.z;
+        rotatedVertex.z = rotatedVertex.z - cameraPos.z;
 
         // Save transformed vertex in the array of transformed vertices
-        transformedVertices[i] = transformedVertex;
+        transformedVertices[i] = rotatedVertex;
     }
 
     for (i = 0; i < FACE_COUNT; i++) {
+        Vec3 normal;
         Face face = faces[i];
 
         faceVertices[0] = transformedVertices[face.a - 1];
@@ -117,8 +119,8 @@ static void update(void) {
 
         cameraRay = vecSub(&cameraPos, &faceVertices[0]);
 
-        normal = face.normal;
-        normal = mtxMulVec3(&rotMat, &normal);
+        // Rotate the face normal
+        mtxMulVec3(&normal, &rotMat, &face.normal);
         
         // Backface Culling
         if (vecDot(&normal, &cameraRay) < 0) 

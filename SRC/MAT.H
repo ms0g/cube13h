@@ -7,16 +7,16 @@ typedef struct {
     double m[3][3];
 } Mat3;
 
-Mat3 mtxIdentity(void);
+void mtxIdentity(Mat3* out);
 
-Mat3 mtxRotz(double angle);
+void mtxRotz(Mat3* out, double angle);
 
-Mat3 mtxRoty(double angle);
+void mtxRoty(Mat3* out, double angle);
 
-Mat3 mtxRotx(double angle);
+void mtxRotx(Mat3* out, double angle);
 
-Vec3 mtxMulVec3(const Mat3* m, const Vec3* v);
+void mtxMulVec3(Vec3* out, const Mat3* m, const Vec3* v);
 
-Mat3 mtxMulMat3(const Mat3* m1, const Mat3* m2);
+void mtxMulMat3(Mat3* out, const Mat3* m1, const Mat3* m2);
 
 #endif
