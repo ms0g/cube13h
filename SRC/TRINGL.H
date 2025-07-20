@@ -8,6 +8,7 @@ typedef struct {
     int b;
     int c;
     char color;
+    Vec3 normal;
 } Face;
 
 typedef struct {

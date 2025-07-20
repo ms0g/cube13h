@@ -20,25 +20,25 @@ static TriArray triangles;
 static int isRunning;
 static unsigned int fps, frames, lastTime, currentTime;
 
-static const Face faces[FACE_COUNT] = {
+static Face faces[FACE_COUNT] = {
     // front
-    {1, 2, 3, 0x50},
-    {1, 3, 4, 0x51},
+    {1, 2, 3, 0x50, {0, 0, -1}},
+    {1, 3, 4, 0x51, {0, 0, -1}},
     // right
-    {4, 3, 5, 0x40},
-    {4, 5, 6, 0x41},
+    {4, 3, 5, 0x40, {1, 0, 0}},
+    {4, 5, 6, 0x41, {1, 0, 0}},
     // back
-    {6, 5, 7, 0x22},
-    {6, 7, 8, 0x23},
+    {6, 5, 7, 0x22, {0, 0, 1}},
+    {6, 7, 8, 0x23, {0, 0, 1}},
     // left
-    {8, 7, 2, 0x2A},
-    {8, 2, 1, 0x2B},
+    {8, 7, 2, 0x2A, {-1, 0, 0}},
+    {8, 2, 1, 0x2B, {-1, 0, 0}},
     // top
-    {2, 7, 5, 0x28},
-    {2, 5, 3, 0x29},
+    {2, 7, 5, 0x28, {0, 1, 0}},
+    {2, 5, 3, 0x29, {0, 1, 0}},
     // bottom
-    {6, 8, 1, 0x36},
-    {6, 1, 4, 0x37},
+    {6, 8, 1, 0x36, {0, -1, 0}},
+    {6, 1, 4, 0x37, {0, -1, 0}},
 };
 
 static const Vec3 vertices[VERTEX_COUNT] = {
@@ -106,11 +106,15 @@ static void update(void) {
         Vec3 fv0 = transformedVertices[face.a - 1];
         Vec3 fv1 = transformedVertices[face.b - 1];
         Vec3 fv2 = transformedVertices[face.c - 1];
+
+        Vec3 cameraRay = vecSub(&cameraPos, &fv0);
+
+        Vec3 normal = face.normal;
+        normal = vecRotx(&normal, cubeRot.x);
+        normal = vecRoty(&normal, cubeRot.y);
+        normal = vecRotz(&normal, cubeRot.z);
         
         // Backface Culling
-        Vec3 cameraRay = vecSub(&cameraPos, &fv0);
-        Vec3 normal = computeNormal(&fv0, &fv1, &fv2);
-    
         if (vecDot(&normal, &cameraRay) < 0) 
             continue;
 
