@@ -65,7 +65,7 @@ Mat3 mtxRotx(double angle) {
     return _m;
 }
 
-Vec3 mtxMulVec3(Mat3* m, Vec3* v) {
+Vec3 mtxMulVec3(const Mat3* m, const Vec3* v) {
     Vec3 _v;
 
     _v.x = m->m[0][0] * v->x + m->m[0][1] * v->y + m->m[0][2] * v->z;
@@ -75,7 +75,7 @@ Vec3 mtxMulVec3(Mat3* m, Vec3* v) {
     return _v;
 }
 
-Mat3 mtxMulMat3(Mat3* m1, Mat3* m2) {
+Mat3 mtxMulMat3(const Mat3* m1, const Mat3* m2) {
     int i, j;
     Mat3 _m;
    

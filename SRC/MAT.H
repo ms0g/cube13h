@@ -15,8 +15,8 @@ Mat3 mtxRoty(double angle);
 
 Mat3 mtxRotx(double angle);
 
-Vec3 mtxMulVec3(Mat3* m, Vec3* v);
+Vec3 mtxMulVec3(const Mat3* m, const Vec3* v);
 
-Mat3 mtxMulMat3(Mat3* m1, Mat3* m2);
+Mat3 mtxMulMat3(const Mat3* m1, const Mat3* m2);
 
 #endif
