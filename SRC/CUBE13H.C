@@ -1,4 +1,5 @@
 #include "VEC.H"
+#include "MAT.H"
 #include "VGA.H"
 #include "UI.H"
 #include "TRINGL.H"
@@ -77,6 +78,7 @@ static void update(void) {
     int i, j;
     Vec2 pv0, pv1, pv2;
     Vec3 transformedVertices[VERTEX_COUNT];
+    Mat3 rotMat, rotx, roty, rotz;
     Triangle projectedTriangle;
 
     calculateFPS();
@@ -85,13 +87,18 @@ static void update(void) {
     
     vecSAdd(&cubeRot, 0.02);
 
+    rotx = mtxRotx(cubeRot.x);
+    roty = mtxRoty(cubeRot.y);
+    rotz = mtxRotz(cubeRot.z);
+
+    rotMat = mtxMulMat3(&rotx, &roty);
+    rotMat = mtxMulMat3(&rotMat, &rotz);
+
     for (i = 0; i < VERTEX_COUNT; i++) {
         Vec3 transformedVertex = vertices[i];
 
         // Rotate the vertex around the cube's center
-        transformedVertex = vecRotx(&transformedVertex, cubeRot.x);
-        transformedVertex = vecRoty(&transformedVertex, cubeRot.y);
-        transformedVertex = vecRotz(&transformedVertex, cubeRot.z);
+        transformedVertex = mtxMulVec3(&rotMat, &transformedVertex);
 
         // Translate the vertex away from the camera
         transformedVertex.z = transformedVertex.z - cameraPos.z;
@@ -110,9 +117,7 @@ static void update(void) {
         Vec3 cameraRay = vecSub(&cameraPos, &fv0);
 
         Vec3 normal = face.normal;
-        normal = vecRotx(&normal, cubeRot.x);
-        normal = vecRoty(&normal, cubeRot.y);
-        normal = vecRotz(&normal, cubeRot.z);
+        normal = mtxMulVec3(&rotMat, &normal);
         
         // Backface Culling
         if (vecDot(&normal, &cameraRay) < 0) 
