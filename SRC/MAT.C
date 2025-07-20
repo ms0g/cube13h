@@ -22,11 +22,13 @@ Mat3 mtxRotz(double angle) {
     // | s  c  0 |
     // | 0  0  1 |
     Mat3 _m = mtxIdentity();
+    double c = cos(angle);
+    double s = sin(angle);
 
-    _m.m[0][0] = cos(angle);
-    _m.m[0][1] = -sin(angle);
-    _m.m[1][0] = sin(angle);
-    _m.m[1][1] = cos(angle);
+    _m.m[0][0] = c;
+    _m.m[0][1] = -s;
+    _m.m[1][0] = s;
+    _m.m[1][1] = c;
 
     return _m;
 }
@@ -36,11 +38,13 @@ Mat3 mtxRoty(double angle) {
     // |  0  1  0 |
     // | -s  0  c |
     Mat3 _m = mtxIdentity();
+    double c = cos(angle);
+    double s = sin(angle);
 
-    _m.m[0][0] = cos(angle);
-    _m.m[0][2] = sin(angle);
-    _m.m[2][0] = -sin(angle);
-    _m.m[2][2] = cos(angle);
+    _m.m[0][0] = c;
+    _m.m[0][2] = s;
+    _m.m[2][0] = -s;
+    _m.m[2][2] = c;
 
     return _m;
 }
@@ -50,11 +54,13 @@ Mat3 mtxRotx(double angle) {
     // | 0  c -s |
     // | 0  s  c |
     Mat3 _m = mtxIdentity();
+    double c = cos(angle);
+    double s = sin(angle);
 
-    _m.m[1][1] = cos(angle);
-    _m.m[1][2] = -sin(angle);
-    _m.m[2][1] = sin(angle);
-    _m.m[2][2] = cos(angle);
+    _m.m[1][1] = c;
+    _m.m[1][2] = -s;
+    _m.m[2][1] = s;
+    _m.m[2][2] = c;
 
     return _m;
 }
@@ -70,8 +76,9 @@ Vec3 mtxMulVec3(Mat3* m, Vec3* v) {
 }
 
 Mat3 mtxMulMat3(Mat3* m1, Mat3* m2) {
-    Mat3 _m;
     int i, j;
+    Mat3 _m;
+   
     for (i = 0; i < 3; ++i) {
         for (j = 0; j < 3; ++j) {
             _m.m[i][j] = m1->m[i][0] * m2->m[0][j] + m1->m[i][1] * m2->m[1][j] + m1->m[i][2] * m2->m[2][j];
