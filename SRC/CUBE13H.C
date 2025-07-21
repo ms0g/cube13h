@@ -2,7 +2,6 @@
 #include "MAT.H"
 #include "VGA.H"
 #include "TRINGL.H"
-#include "TIMER.H"
 #include "KEYBRD.H"
 #include "RENDERER.H"
 
@@ -161,7 +160,6 @@ void main(void) {
 
     vgaInit();
     kbInit();
-	_tmrInit();
 
 	taInit(&triangles, 2);
     
@@ -175,5 +173,4 @@ void main(void) {
 
     vgaExit();
     kbExit();
-	_tmrExit();
 }
