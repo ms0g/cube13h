@@ -1,7 +1,6 @@
 #include "VEC.H"
 #include "MAT.H"
 #include "VGA.H"
-#include "UI.H"
 #include "TRINGL.H"
 #include "TIMER.H"
 #include "KEYBRD.H"
@@ -19,7 +18,6 @@ static Vec3 cubeRot;
 static Vec3 cameraPos;
 static TriArray triangles;
 static int isRunning;
-static unsigned int fps, frames, lastTime, currentTime;
 
 static Face faces[FACE_COUNT] = {
     // front
@@ -53,17 +51,6 @@ static const Vec3 vertices[VERTEX_COUNT] = {
     {-1, -1,  1},
 };
 
-static void calculateFPS(void) {
-    frames++;
-    currentTime = _getTick();
-    // runs every second
-    if (currentTime - lastTime >= TICKS_PER_SECOND) {
-        lastTime = currentTime;
-        fps = frames;
-        frames = 0;
-    }
-}
-
 static void processInput(void) {
     if (kbHit(ESC)) {
         isRunning = 0;
@@ -81,10 +68,6 @@ static void update(void) {
     Vec3 transformedVertices[VERTEX_COUNT];
     Mat3 rotMat, tempMat, rotx, roty, rotz;
     Triangle projectedTriangle;
-
-    calculateFPS();
-
-    uiUpdate(fps);
     
     vecSAdd(&cubeRot, 0.02);
 
@@ -148,8 +131,6 @@ static void render(void) {
 
   	vgaClearOffscreen(0x0);
 
-    uiDraw();
-
     for (i = 0; i < triangles.count; i++) {
         tri = taAt(&triangles, i);
 
@@ -177,12 +158,10 @@ void main(void) {
     cubeRot.z = 0.0;
     
     isRunning = 1;
-    fps = frames = lastTime = currentTime = 0;
 
     vgaInit();
     kbInit();
 	_tmrInit();
-    uiInit();
 
 	taInit(&triangles, 2);
     

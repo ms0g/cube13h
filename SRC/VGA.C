@@ -1,11 +1,9 @@
 #include "VGA.H"
-#include <string.h>
 #include <malloc.h>
 // VGA Graphics Mode
 #define VGA_MODE_13H 0x13
 // VGA Text Mode
 #define VGA_MODE_3H  0x3
-
 #define VRAM_SIZE 64000u
 
 static unsigned char far* vram;
@@ -19,7 +17,14 @@ void vgaInit(void) {
     offscreen = (unsigned char far*)farmalloc(VRAM_SIZE);
 
     if (offscreen) {
-        _fmemset(offscreen, 0, VRAM_SIZE);
+        asm {
+            push es
+            les di, offscreen
+            mov ax, 0x00
+            mov cx, 32000
+            rep stosw
+            pop es
+        }  
         _initMode(VGA_MODE_13H);
     } 
 }
@@ -30,7 +35,16 @@ void vgaExit(void) {
 }
 
 void vgaClearOffscreen(char color) {
-    _fmemset(offscreen, color, VRAM_SIZE);
+    int fill = (color << 8) | color;
+    
+    asm {
+        push es
+        les di, offscreen
+        mov ax, fill
+        mov cx, 32000
+        rep stosw
+        pop es
+    }  
 }
 
 void vgaPutPixel(int x, int y, char color) {
@@ -39,7 +53,17 @@ void vgaPutPixel(int x, int y, char color) {
 
 void vgaUpdateVram(void) {
     _waitvretrace();
-    _fmemcpy(vram, offscreen, VRAM_SIZE);
+    
+    asm {
+        push ds
+        push es
+        les di, vram
+        lds si, offscreen
+        mov cx, 32000
+        rep movsw
+        pop es
+        pop ds
+    }
 }
 
 static void _waitvretrace(void) {
