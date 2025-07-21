@@ -92,7 +92,7 @@ static void update(void) {
     }
 
     for (i = 0; i < FACE_COUNT; i++) {
-        Vec3 normal;
+        Vec3 rotatedNormal;
         Face face = faces[i];
 
         faceVertices[0] = transformedVertices[face.a - 1];
@@ -102,10 +102,10 @@ static void update(void) {
         cameraRay = vecSub(&cameraPos, &faceVertices[0]);
 
         // Rotate the face normal
-        mtxMulVec3(&normal, &rotMat, &face.normal);
+        mtxMulVec3(&rotatedNormal, &rotMat, &face.normal);
         
         // Backface Culling
-        if (vecDot(&normal, &cameraRay) < 0) 
+        if (vecDot(&rotatedNormal, &cameraRay) < 0) 
             continue;
 
         for (j = 0; j < 3; ++j) {
