@@ -1,7 +1,7 @@
 # cube13h
 
 cube13h is a simple 3D graphics demonstration program written in Turbo C and x86 assembly for PC DOS. It demonstrates basic graphics programming techniques to render and animate a 3D cube on the screen, in mode 13h (320x200) colors.
-For the EXE file, download it from [itch.io](https://ms0g.itch.io/cube13h).
+You can download the `EXE` file from [itch.io](https://ms0g.itch.io/cube13h).
 
 ![cube13h](IMG/cube13h.gif)
 
@@ -14,9 +14,10 @@ For the EXE file, download it from [itch.io](https://ms0g.itch.io/cube13h).
 - Double buffering to reduce flickering and tearing.
 
 ## Prerequisites
-- Turbo C++ (>= 3.0)
-- Turbo Assembler (>= 4.1)
-- DOSBox or a real DOS computer
+- **Turbo C++** (`TCC.EXE`) version 3.0 or later  
+- **Turbo Assembler** (`TASM.EXE`) version 4.1 or later  
+- **Turbo Linker** (`TLINK.EXE`) version 5.0 or later  
+- **DOSBox** emulator or a real MS-DOS-compatible computer
 
 ## Usage
 1. Download or clone the cube13h repository to your local machine.
@@ -28,7 +29,7 @@ For the EXE file, download it from [itch.io](https://ms0g.itch.io/cube13h).
 - Press the ESC key to exit the application.
 
 ## Building from Source
-If you want to build cube13h from source, you'll need Turbo C++ and the related [build tools](https://github.com/ms0g/breakout/tree/main/TOOLS/tcpp). 
+If you want to build `cube13h` from source, you'll need Turbo C++ and the related [build tools](https://github.com/ms0g/breakout/tree/main/TOOLS/tcpp). 
 
 ## License
 
