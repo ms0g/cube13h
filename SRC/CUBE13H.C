@@ -62,7 +62,7 @@ static void processInput(void) {
 
 static void update(void) {
     int i, j;
-    Vec3 cameraRay, normal;
+    Vec3 cameraRay;
     Vec3 faceVertices[3];
     Vec3 transformedVertices[VERTEX_COUNT];
     Mat3 rotMat, tempMat, rotx, roty, rotz;
